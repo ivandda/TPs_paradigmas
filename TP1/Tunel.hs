@@ -1,4 +1,4 @@
-module Tunel ( Tunel, newT, connectsT)--, usesT, delayT )
+module Tunel --( Tunel, newT, connectsT, usesT, delayT )
    where
 
 import Link
@@ -10,21 +10,24 @@ data Tunel = Tun [Link] deriving (Eq, Show)
 newT :: [Link] -> Tunel
 newT = Tun
 
--- func :: City -> City -> (City)
+isFirst :: City -> [Link] -> Bool
+isFirst city links = connectsL city (head links) && not (connectsL city (head (tail links)))
 
-connectsT :: City -> City -> Tunel -> Bool 
-   -- inidca si este tunel conceta estas dos ciudades distintas
-   -- { dadas dos ciudades esta función da si si las ciudades son los extremos del túnel }
+isLast :: City -> [Link] -> Bool
+isLast city links = connectsL city (last links) && not (connectsL city (last (init links)))
+
+connectsT :: City -> City -> Tunel -> Bool
 connectsT city1 city2 (Tun links)
-      |length links == 1 = linksL city1 city2 (head links)
-      |otherwise =  False
+      | length links == 1 = linksL city1 city2 (head links)
+      | otherwise = (isFirst city1 links && isLast city2 links) || (isFirst city2 links && isLast city1 links)
 
 
 
 
---usesT :: Link -> Tunel -> Bool  
-   -- indica si este tunel atraviesa ese link
-   --{ Un túnel recorre una serie de uno o más links, esta función indica si el link consultado es parte de esa serie }
---delayT :: Tunel -> Float 
-   -- la demora que sufre una conexion en este tunel
+usesT :: Link -> Tunel -> Bool
+usesT link (Tun links) = link `elem` links
+
+delayT :: Tunel -> Float
+delayT (Tun links) = foldl (\acc x -> delayL x + acc) 0 links
+-- la demora que sufre una conexion en este tunel
    --{ esta demora es en unidades de tiempo, cuanto demora la información en recorrer el túnel}

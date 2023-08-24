@@ -9,23 +9,6 @@ p3 = newP (-3) 4
 p4 = newP (-80) 30
 p5 = newP (-200) (-75)
 
-city1 = newC "Buenos Aires" p1
-city2 = newC "Cordoba" p2
-city3 = newC "Mendoza" p3
-city4 = newC "Salta" p4
-city5 = newC "Rosario" p5
-
-q1 = newQ "A" 10 0.001
-q2 = newQ "B" 7 0.0005
-q3 = newQ "C" 4 0.000001
-q4 = newQ "D" 2 0.0000009
-q5 = newQ "A" (-10) 0.001 --Error errNumNegativo
-q6 = newQ "A" (-10) (-0.001)--Error errNumNegativo
-q7 = newQ "A" 10 (-0.001)--Error errNumNegativo
-
-link1 = newL city1 city2 q1
-link2 = newL city1 city1 q1 -- invalido: no se puedan linkear dos ciudades iguales
-link3 = newL city2 city3 q1
 
 tPoint = [
       difP p1 p2 == 5,
@@ -33,6 +16,12 @@ tPoint = [
       difP p4 p5 == 159.4522,
       difP p3 p5 == 212.24985,
       True]
+
+city1 = newC "Buenos Aires" p1
+city2 = newC "Cordoba" p2
+city3 = newC "Mendoza" p3
+city4 = newC "Salta" p4
+city5 = newC "Rosario" p5
 
 tCity = [   
       nameC city1 == "Buenos Aires",
@@ -49,6 +38,15 @@ tCity = [
 
       True]
 
+q1 = newQ "A" 10 0.001
+q2 = newQ "B" 7 0.0005
+q3 = newQ "C" 4 0.000001
+q4 = newQ "D" 2 0.0000009
+q5 = newQ "A" (-10) 0.001 --Error errNumNegativo
+q6 = newQ "A" (-10) (-0.001)--Error errNumNegativo
+q7 = newQ "A" 10 (-0.001)--Error errNumNegativo
+q8 = newQ "A" 10 7
+
 tQuiality = [
       capacityQ q1 == 10,
       capacityQ q2 == 7,
@@ -61,6 +59,14 @@ tQuiality = [
       delayQ q4 == 0.0000009,
 
       True]
+
+
+linkN = newL city1 city1 q1 -- invalido: no se puedan linkear dos ciudades iguales
+link1 = newL city1 city2 q1
+link2 = newL city2 city3 q1
+link3 = newL city4 city3 q1
+link4 = newL city2 city1 q1
+link5 = newL city3 city5 q8
 
 tLinks = [
       link1 == newL city1 city2 q1,
@@ -79,8 +85,27 @@ tLinks = [
       True]
 
 
-t = newT [link1, link3]
-a = connectsT city1 city2 t
+tunnel1 = newT [link1]
+tunnel2 = newT [link1, link2, link3]
+tunnel3 = newT [link4, link2, link3]
+tunnel4 = newT [link4, link2]
 
-t1 = newT [link1]
-b = connectsT city1 city2 t1
+tTunnels = [
+            connectsT city1 city2 tunnel1 == True,
+            connectsT city1 city4 tunnel2 == True,
+            connectsT city1 city4 tunnel3 == True,
+            connectsT city1 city3 tunnel4 == True,
+
+            connectsT city2 city1 tunnel1 == True,
+            connectsT city1 city3 tunnel2 == False,
+            connectsT city2 city4 tunnel3 == False,
+
+            usesT link1 tunnel1 == True,
+            usesT link2 tunnel1 == False,
+            (usesT link1 tunnel2) && (usesT link2 tunnel2) && (usesT link3 tunnel2) == True,
+
+            delayT tunnel1 == 0.001,
+            True]
+
+
+t = delayT tunnel1 == 0.005
