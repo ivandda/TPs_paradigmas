@@ -1,10 +1,10 @@
 module Errors
    where
 ----------------------Mensajes----------------------
-errNumEntero = "El valor solo puede ser entero"
 errNumNegativo = "El valor solo puede ser positivo"
-errNumNegativoYEntero = "El valor solo puede ser entero positivo"
 errEqCit = "Operacion invalida ente dos ciudades iguales"
+errAddCityToOccupiedSpace = "City cannot be added to an occupied space by other city"
+errCitiesNotInRegion = "Cities are not available in the region, they cannot be linked"
 
 
 

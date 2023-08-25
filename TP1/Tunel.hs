@@ -6,7 +6,6 @@ import City
 
 data Tunel = Tun [Link] deriving (Eq, Show)
 
--- { Un Tunel es la conexión lógica que podemos establecer entre dos puntos, también es bidireccional}
 newT :: [Link] -> Tunel
 newT = Tun
 
@@ -24,10 +23,8 @@ connectsT city1 city2 (Tun links)
 
 
 
-usesT :: Link -> Tunel -> Bool
+usesT :: Link -> Tunel -> Bool -- indica si este túnel atraviesa ese link
 usesT link (Tun links) = link `elem` links
 
 delayT :: Tunel -> Float
 delayT (Tun links) = foldl (\acc x -> delayL x + acc) 0 links
--- la demora que sufre una conexion en este tunel
-   --{ esta demora es en unidades de tiempo, cuanto demora la información en recorrer el túnel}

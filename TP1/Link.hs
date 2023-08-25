@@ -13,12 +13,6 @@ newL city1 city2 quality
       | city1 == city2 = error errEqCit
       | otherwise = Lin city1 city2 quality
 
-cit1L :: Link -> City
-cit1L (Lin cityA cityB _) = cityA
-
-cit2L :: Link -> City
-cit2L (Lin _ cityB _) = cityB
-
 connectsL :: City -> Link -> Bool   -- indica si esta ciudad es parte de este link
 connectsL city (Lin cityA cityB _) 
       | (city == cityA) || (city == cityB) = True
