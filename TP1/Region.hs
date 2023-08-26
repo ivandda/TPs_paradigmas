@@ -17,18 +17,34 @@ newR :: Region --Se arranca con la region vacia
 newR = Reg [] [] []
 
 foundR :: Region -> City -> Region -- agrega una nueva ciudad a la región
--- foundR (Reg (city:cities) links tunels) city1 = Reg (city1:city:cities) links tunels
 foundR (Reg cities links tunels) city
       | isCoordAvailable city (Reg cities links tunels)  = Reg (city:cities) links tunels
       | otherwise = error errAddCityToOccupiedSpace
 
 areCitiesInRegion :: City -> City -> Region -> Bool
-areCitiesInRegion city1 city2 (Reg cities links tunels) = city1 `elem` cities && city2 `elem` cities
+areCitiesInRegion city1 city2 (Reg cities links tunels) = city1 /= city2 && city1 `elem` cities && city2 `elem` cities
 
 linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de la región con un enlace de la calidad indicada
 linkR (Reg cities links tunels) city1 city2 quality
       | areCitiesInRegion city1 city2 (Reg cities links tunels) = Reg cities (newL city1 city2 quality:links) tunels
       | otherwise = error errCitiesNotInRegion
+
+nUsesOfLinkInRegion :: Link -> Region -> Int
+nUsesOfLinkInRegion link (Reg cities links (tunel:tunels))
+      |(tunel:tunels) == [] = 0
+      |usesT link tunel = 1 + nUsesOfLinkInRegion link (Reg cities links tunels)
+      |otherwise = nUsesOfLinkInRegion link (Reg cities links tunels)
+
+nCapacityAvailable :: Link -> Region -> Int
+nCapacityAvailable link region = capacityL link - nUsesOfLinkInRegion link region
+
+isCapacityAvailable :: Link -> Region -> Bool
+isCapacityAvailable link region = nCapacityAvailable link region > 0
+
+isThereAlreadyATunel :: [Tunel] -> City -> City -> Bool
+isThereAlreadyATunel (tunel:tunels) city1 city2
+      |(tunel:tunels) == [] = False
+      |otherwise = connectsT city1 city2 tunel || isThereAlreadyATunel tunels city1 city2
 
 -- usesOfLinkInTunel :: Link -> Tunel -> Int
 -- usesOfLinkInTunel link tunel= foldl (\acc linkThatIsUsedByT -> acc + (if usesT link linkThatIsUsedByT then 1 else 0)) 0 tunel
@@ -59,3 +75,6 @@ linkR (Reg cities links tunels) city1 city2 quality
 -- -- Chequear escenario donde se crea un link nuevo en donde ya existe un link
 
 --Los test son escenarios
+
+--dos qualities no pueden tener el mimso nombre (Str) 
+--tampoco diferente nombre e iguales cap y delay

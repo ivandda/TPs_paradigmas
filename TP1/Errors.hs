@@ -1,10 +1,10 @@
 module Errors
    where
 ----------------------Mensajes----------------------
-errNumNegativo = "El valor solo puede ser positivo"
-errEqCit = "Operacion invalida ente dos ciudades iguales"
+errNumNegativo = "Value cannot be nagative"
+errEqCitCoords = "Invalid operation between two cities on the same coords"
 errAddCityToOccupiedSpace = "City cannot be added to an occupied space by other city"
-errCitiesNotInRegion = "Cities are not available in the region, they cannot be linked"
+errCitiesNotInRegion = "Cities are the same or not available in the region, they cannot be linked"
 
 
 

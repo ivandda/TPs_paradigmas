@@ -11,5 +11,3 @@ norma (Poi x1 y1) (Poi x2 y2) = sqrt (fromIntegral (x1 - x2) ** 2 + fromIntegral
 
 difP :: Point -> Point -> Float
 difP = norma
-
---los puntos tienen que estar entre x y x'

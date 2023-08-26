@@ -20,10 +20,7 @@ connectsT city1 city2 (Tun links)
       | length links == 1 = linksL city1 city2 (head links)
       | otherwise = (isFirst city1 links && isLast city2 links) || (isFirst city2 links && isLast city1 links)
 
-
-
-
-usesT :: Link -> Tunel -> Bool -- indica si este túnel atraviesa ese link
+usesT :: Link -> Tunel -> Bool -- indica si este túnel atraviesa ese link 
 usesT link (Tun links) = link `elem` links
 
 delayT :: Tunel -> Float
