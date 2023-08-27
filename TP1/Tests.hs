@@ -161,6 +161,8 @@ tRegion = [
             isCoordAvailable city2 regionA1 == True,
             isCoordAvailable errCity1 regionA1 == True,
 
-            -- nUsesOfLinkInRegion li
-
             True]
+
+regionA9 = addTunel regionA8 [tunnel1]
+regionA10 = addTunel regionA9 [tunnel2, tunnel3]
+regionA11 = addTunel regionA10 [tunnel7] -- no more available sapce in link5
