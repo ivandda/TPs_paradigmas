@@ -61,7 +61,7 @@ q3 = newQ "C" 4 10
 q4 = newQ "D" 2 20
 q5 = newQ "A" 1 0.5
 
-tQuiality = [
+tQuality = [
       capacityQ q1 == 10,
       capacityQ q2 == 7,
       capacityQ q3 == 4,
@@ -141,28 +141,51 @@ tTunnels = [
 regionA1 = newR
 regionA2 = foundR regionA1 city1
 
-errorRegion1 = foundR regionA2 city1 -- err errAddCityToOccupiedSpace
-errorRegion2 = foundR regionA2 errCity1 -- err errAddCityToOccupiedSpace
-errorRegion3 = foundR regionA2 errCity2 -- err errAddCityToOccupiedSpace
+errorRegionCoords1 = foundR regionA2 city1 -- err errAddCityToOccupiedSpace
+errorRegionCoords2 = foundR regionA2 errCity1 -- err errAddCityToOccupiedSpace
+errorRegionCoords3 = foundR regionA2 errCity2 -- err errAddCityToOccupiedSpace
 
 regionA3 = foundR regionA2 city2
 regionA4 = foundR regionA3 city3
 regionA5 = foundR regionA4 city4
 regionA6 = foundR regionA5 city5
 
-errorRegion4 = linkR regionA6 errCity1 city2 q1 -- err errCitiesNotInRegion
-errorRegion5 = linkR regionA6 errCity1 errCity2 q1 -- err errCitiesNotInRegion
-errorRegion6 = linkR regionA6 city1 city1 q1 -- err errCitiesNotInRegion
+errorRegionLinkCities4 = linkR regionA6 errCity1 city2 q1 -- err errCitiesNotInRegion
+errorRegionLinkCities5 = linkR regionA6 errCity1 errCity2 q1 -- err errCitiesNotInRegion
+errorRegionLinkCities6 = linkR regionA6 city1 city1 q1 -- err errCitiesNotInRegion
 regionA7  = linkR regionA6 city1 city2 q1
 regionA8  = linkR regionA7 city2 city3 q1
+regionA9  = linkR regionA8 city3 city4 q1
+
+regionA10  = linkR regionA9 city4 city5 q1
+regionA11 = linkR regionA10 city5 city1 q5
+
+regionB1 = tunelR regionA10 [city1, city2, city3, city4, city5]
+regionB2 = tunelR regionA10 [city5, city4, city3, city2, city1]
+regionB3 = tunelR regionA10 [city5, city4, city3, city2, city1, city2, city3, city4]
+regionB4 = tunelR regionA11 [city1, city5]
+errorRegionTunel7 = tunelR regionB4 [city1, city5] -- Exception: Cant create tunel, a tunel already exists
+errorRegionTunel8 = tunelR regionB4 [city1, city5, city4] -- Exception: No capacity in link to create tunel
+errorRegionTunel9 = tunelR regionB4 [city1, city3] -- Exception: There is no available link
+errorRegionTunel10 = tunelR regionA3 [city1, city5] --  Cities are the same or not available in the region, they cannot be linked
+errorRegionTunel11 = tunelR regionA10 [city5, city4, city3, city2, city1, city2, city3, city4, city5] --errorRegionTunel10
 
 tRegion = [
-            isCoordAvailable city1 regionA1 == True,
-            isCoordAvailable city2 regionA1 == True,
-            isCoordAvailable errCity1 regionA1 == True,
+      connectedR regionB1 city1 city5 == True,
+      connectedR regionB1 city1 errCity2 == False,
+      connectedR regionB4 city4 city2 == False,
+      connectedR regionB4 city3 city4 == False,
 
-            True]
+      linkedR regionB1 city1 city2 == True,
+      linkedR regionB1 city1 city5 == False,
 
-regionA9 = addTunel regionA8 [tunnel1]
-regionA10 = addTunel regionA9 [tunnel2, tunnel3]
-regionA11 = addTunel regionA10 [tunnel7] -- no more available sapce in link5
+      delayR regionB1 city1 city5 == 13.0,
+      delayR regionB1 city5 city1 == 13.0,
+      delayR regionB3 city5 city4 == 22.5,
+      
+      availableCapacityForR regionB1 city1 city2 == 9,
+      availableCapacityForR regionB4 city1 city5 == 0,
+      availableCapacityForR regionB4 city1 city5 == 0,
+             
+      True]
+      
