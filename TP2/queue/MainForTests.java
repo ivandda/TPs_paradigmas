@@ -1,4 +1,4 @@
-package queue.quque3;
+package queue.queue;
 public class MainForTests {
 
 

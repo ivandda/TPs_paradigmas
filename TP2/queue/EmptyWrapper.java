@@ -1,13 +1,12 @@
-package queue.queue2;
+package queue.queue;
 
-public class EmptyQueue extends BuildQueue {
+public class EmptyWrapper extends Wrapper {
+
     public boolean isEmpty() {
         return true;
     }
 
-    public BuildQueue add(Object cargo) {
-        return new WithElementsQueue(cargo);
-    }
+//    public Queue add(Object cargo) {return true;}
 
     public Object take() {
         throw new Error("Queue is empty");
@@ -17,9 +16,5 @@ public class EmptyQueue extends BuildQueue {
         throw new Error("Queue is empty");
     }
 
-    public int size() {
-        return 0;
-    }
-
-
+//    public int size() {return 0;}
 }

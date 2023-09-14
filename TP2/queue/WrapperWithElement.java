@@ -1,4 +1,4 @@
-package queue.quque3;
+package queue.queue;
 
 public class WrapperWithElement extends Wrapper {
     public final Object element;
