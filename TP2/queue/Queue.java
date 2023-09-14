@@ -3,37 +3,39 @@ package queue.queue;
 import java.util.ArrayList;
 
 public class Queue {
-    // Change name of queue to queueOfWrappers?
-    private ArrayList<Wrapper> queue = new ArrayList<>();
+    private ArrayList<Wrapper> listOfWrappers = new ArrayList<>();
 
     public Queue() {
-        queue.add(new EmptyWrapper());
+        listOfWrappers.add(new EmptyWrapper());
     }
 
     public boolean isEmpty() {
-        return firstWrapper().isEmpty();
+        return firstNonEmptyWrapper().isEmpty();
     }
 
     public Queue add(Object cargo) {
-        queue.add(indexLastElement(), newWrapperWithElement(cargo));
+        listOfWrappers.add(indexLastElemOfQueue(), newWrapperWithElement(cargo));
         return this;
     }
 
     public Object take() {
-        Object removedElement = this.head();
-        queue.remove(indexFirstElement());
-        return removedElement;
+        Object toBeRemovedElement = this.head();
+        listOfWrappers.remove(indexFirstElemOfQueue());
+        return toBeRemovedElement;
     }
 
-    public Object head() {return firstWrapper().getElement();}
+    public Object head() {return firstNonEmptyWrapper().getElement();}
 
-    public int size() {return queue.size() - 1;}
+    public int size() {return listOfWrappers.size() - 1;}
 
-    private int indexFirstElement() {return queue.size() - 1;}
 
-    private int indexLastElement() {return 1;}
 
-    private Wrapper firstWrapper() {return queue.get(indexFirstElement());}
+
+    private int indexFirstElemOfQueue() {return listOfWrappers.size() - 1;}
+
+    private int indexLastElemOfQueue() {return 1;}
+
+    private Wrapper firstNonEmptyWrapper() {return listOfWrappers.get(indexFirstElemOfQueue());}
 
     private WrapperWithElement newWrapperWithElement(Object cargo) {return new WrapperWithElement(cargo);}
 
