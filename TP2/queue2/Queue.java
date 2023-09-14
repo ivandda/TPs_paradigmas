@@ -1,6 +1,6 @@
-package queue.queue;
+package queue.queue2;
 
-public class Queue{
+public class Queue {
     //MAKE PRIVATE
     public BuildQueue queue;
 

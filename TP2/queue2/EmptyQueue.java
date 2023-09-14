@@ -1,4 +1,4 @@
-package queue.queue;
+package queue.queue2;
 
 public class EmptyQueue extends BuildQueue {
     public boolean isEmpty() {
@@ -10,11 +10,11 @@ public class EmptyQueue extends BuildQueue {
     }
 
     public Object take() {
-        throw new RuntimeException("Queue is empty");
+        throw new Error("Queue is empty");
     }
 
     public Object head() {
-        throw new RuntimeException("Queue is empty");
+        throw new Error("Queue is empty");
     }
 
     public int size() {
