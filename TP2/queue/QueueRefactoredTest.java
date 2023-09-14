@@ -7,6 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class QueueRefactoredTest {
 
+    public static String MESSAGE_EMPTY_QUEUE = "Queue is empty";
+    private String firstElement = "First";
+    private String secondElement = "Second";
+    private String[] oneElement = new String[]{firstElement};
+    private String[] twoElements = new String[]{firstElement, secondElement};
+
     @Test
     public void test01QueueShouldBeEmptyWhenCreated() {
         assertTrue(new Queue().isEmpty());
@@ -26,21 +32,18 @@ public class QueueRefactoredTest {
     public void test04TakeRemovesElementsFromTheQueue() {
         Queue queue = queueWith(oneElement);
         queue.take();
-
         assertTrue(queue.isEmpty());
     }
 
     @Test
     public void test05TakeReturnsLastAddedObject() {
         Queue queue = queueWith(oneElement);
-
         assertEquals(firstElement, queue.take());
     }
 
     @Test
     public void test06QueueBehavesFIFO() {
         Queue queue = queueWith(twoElements);
-
         assertEquals(queue.take(), firstElement);
         assertEquals(queue.take(), secondElement);
         assertTrue(queue.isEmpty());
@@ -49,7 +52,6 @@ public class QueueRefactoredTest {
     @Test
     public void test07HeadReturnsFirstAddedObject() {
         Queue queue = queueWith(twoElements);
-
         assertEquals(queue.head(), firstElement);
     }
 
@@ -90,7 +92,6 @@ public class QueueRefactoredTest {
         assertEquals(message, assertThrows(Error.class, executable).getMessage());
     }
 
-
     private Queue queueWith(Object[] elements) {
         Queue queue = new Queue();
         for (Object element : elements) {
@@ -98,12 +99,5 @@ public class QueueRefactoredTest {
         }
         return queue;
     }
-
-    private String firstElement = "First";
-    private String secondElement = "Second";
-    private String[] oneElement = new String[]{firstElement};
-    private String[] twoElements = new String[]{firstElement, secondElement};
-    public static String MESSAGE_EMPTY_QUEUE = "Queue is empty";
-
 
 }
