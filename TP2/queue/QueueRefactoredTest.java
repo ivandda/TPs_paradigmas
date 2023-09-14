@@ -1,10 +1,11 @@
 package queue.queue;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class QueueRefactoredTest{
+public class QueueRefactoredTest {
 
     @Test
     public void test01QueueShouldBeEmptyWhenCreated() {
@@ -13,17 +14,17 @@ public class QueueRefactoredTest{
 
     @Test
     public void test02AddElementsToTheQueue() {
-        assertFalse(queueWithElements(oneElement).isEmpty());
+        assertFalse(queueWith(oneElement).isEmpty());
     }
 
     @Test
     public void test03AddedElementsIsAtHead() {
-        assertEquals(firstElement, queueWithElements(oneElement).head());
+        assertEquals(firstElement, queueWith(oneElement).head());
     }
 
     @Test
     public void test04TakeRemovesElementsFromTheQueue() {
-        Queue queue = queueWithElements(oneElement);
+        Queue queue = queueWith(oneElement);
         queue.take();
 
         assertTrue(queue.isEmpty());
@@ -31,14 +32,14 @@ public class QueueRefactoredTest{
 
     @Test
     public void test05TakeReturnsLastAddedObject() {
-        Queue queue = queueWithElements(oneElement);
+        Queue queue = queueWith(oneElement);
 
         assertEquals(firstElement, queue.take());
     }
 
     @Test
     public void test06QueueBehavesFIFO() {
-        Queue queue = queueWithElements(twoElements);
+        Queue queue = queueWith(twoElements);
 
         assertEquals(queue.take(), firstElement);
         assertEquals(queue.take(), secondElement);
@@ -47,14 +48,14 @@ public class QueueRefactoredTest{
 
     @Test
     public void test07HeadReturnsFirstAddedObject() {
-        Queue queue = queueWithElements(twoElements);
+        Queue queue = queueWith(twoElements);
 
         assertEquals(queue.head(), firstElement);
     }
 
     @Test
     public void test08HeadDoesNotRemoveObjectFromQueue() {
-        Queue queue = queueWithElements(oneElement);
+        Queue queue = queueWith(oneElement);
         assertEquals(1, queue.size());
         queue.head();
         assertEquals(1, queue.size());
@@ -62,47 +63,36 @@ public class QueueRefactoredTest{
 
     @Test
     public void test09SizeRepresentsObjectInTheQueue() {
-        assertEquals(2, queueWithElements(twoElements).size());
+        assertEquals(2, queueWith(twoElements).size());
     }
 
     @Test
     public void test10CanNotTakeWhenThereAreNoObjectsInTheQueue() {
         Queue queue = new Queue();
-        try {
-            queue.take();
-            fail("Expected Error was not thrown.");
-        } catch (Error e) {
-            assertTrue(e.getMessage().equals("Queue is empty"));
-        }
+        assertThrowsLike(() -> queue.take(), MESSAGE_EMPTY_QUEUE);
     }
 
     @Test
     public void test09CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
-        Queue queue = queueWithElements(oneElement);
+        Queue queue = queueWith(oneElement);
         queue.take();
-        try {
-            queue.take();
-            fail("Expected Error was not thrown.");
-        } catch (Error e) {
-            assertTrue(e.getMessage().equals("Queue is empty"));
-        }
+        assertThrowsLike(() -> queue.take(), MESSAGE_EMPTY_QUEUE);
     }
 
     @Test
     public void test10CanNotHeadWhenThereAreNoObjectsInTheQueue() {
         Queue queue = new Queue();
-        try {
-            queue.head();
-            fail("Expected Error was not thrown.");
-        } catch (Error e) {
-            assertTrue(e.getMessage().equals("Queue is empty"));
-        }
+        assertThrowsLike(() -> queue.head(), MESSAGE_EMPTY_QUEUE);
     }
 
-    private Queue queueWithElements(Object[] elements) {
-        Queue queue = new Queue();
-//        elements.stream().forEach
 
+    private void assertThrowsLike(Executable executable, String message) {
+        assertEquals(message, assertThrows(Error.class, executable).getMessage());
+    }
+
+
+    private Queue queueWith(Object[] elements) {
+        Queue queue = new Queue();
         for (Object element : elements) {
             queue.add(element);
         }
@@ -111,8 +101,9 @@ public class QueueRefactoredTest{
 
     private String firstElement = "First";
     private String secondElement = "Second";
-    private String[] oneElement= new String[] {firstElement};
-    private String[] twoElements= new String[] {firstElement, secondElement };
+    private String[] oneElement = new String[]{firstElement};
+    private String[] twoElements = new String[]{firstElement, secondElement};
+    public static String MESSAGE_EMPTY_QUEUE = "Queue is empty";
 
 
 }
