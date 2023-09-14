@@ -11,11 +11,8 @@ public class WrapperWithElement extends Wrapper {
         return false;
     }
 
-    public Object take() {
-        return this.element;
-    }
 
-    public Object head() {
+    public Object getElement() {
         return this.element;
     }
 

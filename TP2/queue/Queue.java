@@ -25,9 +25,7 @@ public class Queue {
         return removedElement;
     }
 
-    public Object head() {
-        return firstWrapper().head();
-    }
+    public Object head() {return firstWrapper().getElement();}
 
     public int size() {return queue.size() - 1;}
 
