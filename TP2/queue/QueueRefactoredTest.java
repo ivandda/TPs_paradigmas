@@ -2,20 +2,12 @@ package queue.queue;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QueueRefactoredTest {
-
-    public static String MESSAGE_EMPTY_QUEUE = "Queue is empty";
-    private String firstElement = "First";
-    private String secondElement = "Second";
-    private String[] oneElement = new String[]{firstElement};
-    private String[] twoElements = new String[]{firstElement, secondElement};
-
     @Test
     public void test01QueueShouldBeEmptyWhenCreated() {
-        assertTrue(new Queue().isEmpty());
+        assertTrue(queueWith(ceroElements).isEmpty());
     }
 
     @Test
@@ -99,5 +91,12 @@ public class QueueRefactoredTest {
         }
         return queue;
     }
+
+    public static String MESSAGE_EMPTY_QUEUE = "Queue is empty";
+    private String firstElement = "First";
+    private String secondElement = "Second";
+    private String[] ceroElements = new String[]{};
+    private String[] oneElement = new String[]{firstElement};
+    private String[] twoElements = new String[]{firstElement, secondElement};
 
 }
