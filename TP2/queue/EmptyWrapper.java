@@ -2,13 +2,10 @@ package queue.queue;
 
 public class EmptyWrapper extends Wrapper {
 
-    public static String MESSAGE_EMPTY_QUEUE = "Queue is empty";
-    public boolean isEmpty() {
-        return true;
-    }
+    public static String message_empty_queue = "Queue is empty";
 
     public Object getElement() {
-        throw new Error(MESSAGE_EMPTY_QUEUE);
+        throw new Error(message_empty_queue);
     }
 
 }

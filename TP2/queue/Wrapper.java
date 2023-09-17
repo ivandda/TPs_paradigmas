@@ -1,8 +1,17 @@
 package queue.queue;
 
-public abstract class Wrapper {
-    public abstract boolean isEmpty();
+public class Wrapper {
+    public Object element;
 
-    public abstract Object getElement();
+    public Wrapper() {
+    }
+
+    public Wrapper(Object element) {
+        this.element = element;
+    }
+
+    public Object getElement() {
+        return this.element;
+    }
 
 }

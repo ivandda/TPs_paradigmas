@@ -2,6 +2,9 @@ package queue.queue;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QueueRefactoredTest {
@@ -63,20 +66,20 @@ public class QueueRefactoredTest {
     @Test
     public void test10CanNotTakeWhenThereAreNoObjectsInTheQueue() {
         Queue queue = new Queue();
-        assertThrowsLike(() -> queue.take(), MESSAGE_EMPTY_QUEUE);
+        assertThrowsLike(() -> queue.take(), message_empty_queue);
     }
 
     @Test
     public void test09CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
         Queue queue = queueWith(oneElement);
         queue.take();
-        assertThrowsLike(() -> queue.take(), MESSAGE_EMPTY_QUEUE);
+        assertThrowsLike(() -> queue.take(), message_empty_queue);
     }
 
     @Test
     public void test10CanNotHeadWhenThereAreNoObjectsInTheQueue() {
         Queue queue = new Queue();
-        assertThrowsLike(() -> queue.head(), MESSAGE_EMPTY_QUEUE);
+        assertThrowsLike(() -> queue.head(), message_empty_queue);
     }
 
 
@@ -86,13 +89,11 @@ public class QueueRefactoredTest {
 
     private Queue queueWith(Object[] elements) {
         Queue queue = new Queue();
-        for (Object element : elements) {
-            queue.add(element);
-        }
+        Arrays.stream(elements).forEach((e)->queue.add(e));
         return queue;
     }
 
-    public static String MESSAGE_EMPTY_QUEUE = "Queue is empty";
+    public static String message_empty_queue = EmptyWrapper.message_empty_queue;
     private String firstElement = "First";
     private String secondElement = "Second";
     private String[] ceroElements = new String[]{};

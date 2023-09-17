@@ -15,4 +15,3 @@ No se pueden modificar los tests.
 ### Cosas que no pueden pasar:
 - El polimorfismo no puede ser en Queue, tiene que pasar dentro de Queue
 - "La magia sucede adentro de Queue"
-- 

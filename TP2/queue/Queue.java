@@ -5,9 +5,13 @@ import java.util.ArrayList;
 public class Queue {
     private ArrayList<Wrapper> listOfWrappers = new ArrayList<>();
 
-    public Queue() {listOfWrappers.add(new EmptyWrapper());}
+    public Queue() {
+        listOfWrappers.add(new EmptyWrapper());
+    }
 
-    public boolean isEmpty() {return firstNonEmptyWrapper().isEmpty();}
+    public boolean isEmpty() {
+        return this.size() == 0;
+    }
 
     public Queue add(Object cargo) {
         listOfWrappers.add(indexLastElemOfQueue(), newWrapperWithElement(cargo));
@@ -16,20 +20,20 @@ public class Queue {
 
     public Object take() {
         Object toBeRemovedElement = this.head();
-        listOfWrappers.remove(indexFirstElemOfQueue());
+        listOfWrappers.remove(size());
         return toBeRemovedElement;
     }
 
-    public Object head() {return firstNonEmptyWrapper().getElement();}
+    public Object head() {
+        return listOfWrappers.get(size()).getElement();
+    }
 
-    public int size() {return listOfWrappers.size() - 1;}
-
-    private int indexFirstElemOfQueue() {return listOfWrappers.size() - 1;}
+    public int size() {
+        return listOfWrappers.size() - 1;
+    }
 
     private int indexLastElemOfQueue() {return 1;}
 
-    private Wrapper firstNonEmptyWrapper() {return listOfWrappers.get(indexFirstElemOfQueue());}
-
-    private WrapperWithElement newWrapperWithElement(Object cargo) {return new WrapperWithElement(cargo);}
+    private Wrapper newWrapperWithElement(Object cargo) {return new Wrapper(cargo);}
 
 }
