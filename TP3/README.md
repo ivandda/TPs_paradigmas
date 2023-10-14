@@ -24,4 +24,11 @@ Les preocupa mucho el código repetido, el uso de Ifs, los malos nombres y las r
 
 Algunas características del submarino que tenemos que controlar son que: por ahora no hay problemas con sumergirse demasiado, tampoco pasa nada si le insistimos en emerger cuando está en superficie. Por otro lado, la cápsula sólo se puede lanzar en superficie o en el primer nivel de inmersión. En estos casos lanzar la cápsula no tiene ningún efecto detectable en el submarino. Pero si se intenta liberar a mayor profundidad de lo permitido el submarino se destruye, probablemente por exceso de chocolate.
 
+
 (*) comentaron algo como que incluye todo lo visto y corregido hasta ahora, porque se va a evaluar también ¯\_(ツ)_/¯
+
+## Notas
+
+- Distinguir el 'comando' del 'caracter' y el 'string'
+- Los comandos en sí son, en este caso, caracteres. La secuencia de comandos viene también en este caso en la forma de Strings. Lo que les interesa modelar con polimorfismo, no son los caracteres sino el comportamiento de los comandos sobre el submarino. 
+- El polimorfismo debe ser entre los las entidades que representan el comportamiento del comando, y no entre Strings.
