@@ -1,7 +1,13 @@
 package submarino.commands;
 
-import submarino.Position;
+import submarino.States.*;
 
 public abstract class Command {
-    public abstract Position execute(Position position);
+    public abstract State ExecuteMeAsDestroyed(Destroyed destroyed);
+
+    public abstract State executeMeAsOneSubmerged(OneSubmerged oneSubmerged);
+
+    public abstract State executeMeAsSurface(Surface surface);
+
+    public abstract State ExecuteMeAsFullySubmerged(FullySubmerged fullySubmerged);
 }

@@ -12,10 +12,10 @@ public class Validator {
     }
 
     public boolean applies(char desiredCommand) {
-        return (this.charToValidate == desiredCommand);
+        return (charToValidate == desiredCommand);
     }
 
     public Command getCommand() {
-        return this.commandForThisChar;
+        return commandForThisChar;
     }
 }

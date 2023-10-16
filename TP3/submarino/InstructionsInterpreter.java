@@ -20,7 +20,7 @@ public class InstructionsInterpreter {
     );
 
     public InstructionsInterpreter(String instructions) {
-        String stringToIndicateNoMoreCommands = "X";
+        String stringToIndicateNoMoreCommands = "@";
         this.inputInstructions = instructions + stringToIndicateNoMoreCommands;
     }
 
