@@ -6,21 +6,21 @@ import submarine.orientation.NorthOrientationManager;
 import submarine.orientation.OrientationManager;
 
 public class Nemo {
-    public OrientationManager orientationManager;
+    public InstructionsManager instructionsManager = new InstructionsManager();
+    public OrientationManager orientationManager = new NorthOrientationManager();
     public XYPositionManager xyPositionManager;
     public DepthManager depthManager;
-    public InstructionsManager instructionsManager = new InstructionsManager();
 
     public Nemo() {
-        this.orientationManager = new NorthOrientationManager();
         this.xyPositionManager = new XYPositionManager();
         this.depthManager = new Surface();
     }
 
     public Nemo(int x, int y , String orientation) {
-        OrientationManager a = new NorthOrientationManager();
-        this.orientationManager = a.getOrientationManagerByName(orientation);
+        this.orientationManager = orientationManager.getOrientationManagerByName(orientation);
         this.xyPositionManager = new XYPositionManager(x,y);
         this.depthManager = new Surface();
     }
 }
+
+//pasarle Clases a nemo

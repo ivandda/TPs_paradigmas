@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class DepthManager {
     private ArrayList<DepthManager> upperDepths = new java.util.ArrayList<>();
+//    previousDepth
     public abstract DepthManager goDownAsCurrentDepth(DepthManager depthManager);
     public abstract DepthManager goUpAsCurrentDepth(DepthManager depthManager);
 
