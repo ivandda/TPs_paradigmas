@@ -1,4 +1,4 @@
-package submarino;
+package submarino.instructionsInterpreter;
 
 import submarino.commands.Command;
 
@@ -19,3 +19,6 @@ public class Validator {
         return commandForThisChar;
     }
 }
+
+
+//Esto tiene que estar en command, NO en una clase aparte

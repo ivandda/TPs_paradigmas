@@ -1,9 +1,8 @@
-package submarino.commands;
+package submarino.instructionsInterpreter;
 
 import org.junit.jupiter.api.Test;
-import submarino.InstructionsInterpreter;
-
-import java.util.ArrayList;
+import submarino.commands.*;
+import submarino.instructionsInterpreter.InstructionsInterpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

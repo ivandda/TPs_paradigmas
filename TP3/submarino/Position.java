@@ -5,11 +5,14 @@ import java.util.Vector;
 
 public class Position {
     public ArrayList<Integer> coordinate = new ArrayList<Integer>();
+    public ArrayList<Integer> forwardVector = new ArrayList<Integer>();
 
     public Position() {
         coordinate.add(0);
         coordinate.add(0);
         coordinate.add(0);
+        forwardVector.add(0);
+        forwardVector.add(1);
     }
     
     public Position(int xCoordinate, int yCoordinate, int zCoordinate){

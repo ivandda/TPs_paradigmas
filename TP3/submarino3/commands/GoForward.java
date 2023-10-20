@@ -4,11 +4,11 @@ import submarino3.Nemo;
 
 public class GoForward extends Command {
     public GoForward() {
-        this.charIdentifier = 'f';
+        this.identifier = 'f';
     }
 
     @Override
     public void execute(Nemo nemo) {
-        nemo.xyPositionManager = nemo.orientationManager.moveForward(nemo.xyPositionManager);
+        nemo.xyPositionManager = nemo.orientationManager.moveForwardAsOrientation(nemo.xyPositionManager);
     }
 }

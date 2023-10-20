@@ -3,18 +3,17 @@ package submarino3.orientation;
 import submarino3.XYPositionManager;
 
 public class SouthOrientationManager extends OrientationManager {
-    @Override
-    public String getOrientationName() {
-        return "South";
+    public SouthOrientationManager() {
+        orientationName = "south";
     }
 
-    public XYPositionManager moveForward(XYPositionManager xyPositionManager) {
+    public XYPositionManager moveForwardAsOrientation(XYPositionManager xyPositionManager) {
         return xyPositionManager.decreaseX();
     }
-    public OrientationManager turnRight(OrientationManager orientationManager) {
+    public OrientationManager turnRightAsOrientation(OrientationManager orientationManager) {
         return new WestOrientationManager();
     }
-    public OrientationManager turnLeft(OrientationManager orientationManager) {
-        return new EastOrienationManager();
+    public OrientationManager turnLeftAsOrientation(OrientationManager orientationManager) {
+        return new EastOrientationManager();
     }
 }

@@ -3,6 +3,7 @@ package submarino;
 import submarino.States.State;
 import submarino.States.Surface;
 import submarino.commands.Command;
+import submarino.instructionsInterpreter.InstructionsInterpreter;
 
 import java.util.ArrayList;
 

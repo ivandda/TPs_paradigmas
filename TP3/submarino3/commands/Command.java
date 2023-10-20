@@ -3,10 +3,10 @@ package submarino3.commands;
 import submarino3.Nemo;
 
 public abstract class Command {
-    char charIdentifier;
+    char identifier;
 
-    public boolean applies(char c) {
-        return c == charIdentifier;
+    public boolean applies(char charToValidate) {
+        return charToValidate == identifier;
     }
 
     public abstract void execute(Nemo nemo);

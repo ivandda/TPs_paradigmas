@@ -4,6 +4,8 @@ import submarino3.commands.*;
 
 import java.util.ArrayList;
 
+import static java.lang.Character.toLowerCase;
+
 public class InstructionsManager {
     private static ArrayList<Command> commands = new ArrayList<>(
             java.util.Arrays.asList(
@@ -28,7 +30,7 @@ public class InstructionsManager {
                 .mapToObj(currentInstruction -> (char) currentInstruction)
                 .forEach(currentInstruction -> {
                     commands.stream()
-                            .filter(command -> command.applies(currentInstruction))
+                            .filter(command -> command.applies(toLowerCase(currentInstruction)))
                             .findFirst()
                             .ifPresent(validatedCommands::add);
                 });

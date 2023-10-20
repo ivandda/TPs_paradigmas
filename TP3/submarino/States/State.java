@@ -4,13 +4,19 @@ import submarino.Position;
 import submarino.commands.Command;
 
 public abstract class State {
-    public Position position;
-    public State previousLinkedStates;
+//    private Position position;
+//    private State previousLinkedState;
 
+    public Position position;
+    public State previousLinkedState;
     public State(Position position, State previousLinkedStates) {
         this.position = position;
-        this.previousLinkedStates = previousLinkedStates;
+        this.previousLinkedState = previousLinkedStates;
     }
 
     public abstract State executeCommand(Command command);
+
+    public Position getPosition() {return position;}
+
+    public State getPreviousLinkedState() {return previousLinkedState;}
 }

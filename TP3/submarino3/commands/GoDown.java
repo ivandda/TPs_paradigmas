@@ -4,12 +4,12 @@ import submarino3.Nemo;
 
 public class GoDown extends Command {
     public GoDown() {
-        this.charIdentifier = 'd';
+        this.identifier = 'd';
     }
 
     @Override
     public void execute(Nemo nemo) {
-
+        nemo.depthManager = nemo.depthManager.goDownAsCurrentDepth(nemo.depthManager);
     }
 }
 
