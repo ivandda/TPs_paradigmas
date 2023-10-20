@@ -20,7 +20,7 @@ public class Nemo {
     public Nemo(int x, int y , String orientation) {
         OrientationManager a = new NorthOrientationManager();
         this.orientationManager = a.getOrientationManagerByName(orientation);
-        this.xyPositionManager = new XYPositionManager();
+        this.xyPositionManager = new XYPositionManager(x,y);
         this.depthManager = new Surface();
     }
 }

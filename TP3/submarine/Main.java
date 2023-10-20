@@ -9,7 +9,7 @@ public class Main {
 //        System.out.println(nemo.orientationManager.getOrientationName());
 //        System.out.println(nemo.depthManager.getZ());
 
-        Nemo nemo = new Nemo(1,1,"EAST");
+        Nemo nemo = new Nemo(99,99,"EAST");
         nemo.instructionsManager.executeInstructions("ddu@@@@@uduffmmmMMMMMDUMRRFF", nemo);
         System.out.println(nemo.xyPositionManager.getX());
         System.out.println(nemo.xyPositionManager.getY());
