@@ -16,11 +16,34 @@ public class Nemo {
         this.depthManager = new Surface();
     }
 
-    public Nemo(int x, int y , String orientation) {
-        this.orientationManager = orientationManager.getOrientationManagerByName(orientation);
-        this.xyPositionManager = new XYPositionManager(x,y);
-        this.depthManager = new Surface();
+    public void executeInstructions(String instructions) {
+        this.instructionsManager.executeInstructions(instructions, this);
     }
+
+    public void goUp() {
+        depthManager = this.depthManager.goUpAsCurrentDepth(this.depthManager);
+    }
+
+    public void goDown() {
+        depthManager = this.depthManager.goDownAsCurrentDepth(this.depthManager);
+    }
+
+    public void goForward() {
+        xyPositionManager = this.orientationManager.moveForwardAsOrientation(this.xyPositionManager);
+    }
+
+    public void ReleaseCapsule() {
+        depthManager.releaseCapsuleAsCurrentDepth();
+    }
+
+    public void turnLeft() {
+        orientationManager = this.orientationManager.turnLeftAsOrientation(this.orientationManager);
+    }
+
+    public void turnRight() {
+        orientationManager = this.orientationManager.turnRightAsOrientation(this.orientationManager);
+    }
+
 }
 
 //pasarle Clases a nemo

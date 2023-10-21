@@ -1,40 +1,36 @@
 package submarine;
 
 public class XYPositionManager {
-    private int x;
-    private int y;
+    private int xCoord;
+    private int yCoord;
 
     public XYPositionManager() {
-        this.x = 0;
-        this.y = 0;
+        this.xCoord = 0;
+        this.yCoord = 0;
     }
 
-    public XYPositionManager(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public XYPositionManager(int xCoord, int yCoord) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
     }
 
     public XYPositionManager increaseX() {
-        return new XYPositionManager(this.x + 1, this.y);
+        return new XYPositionManager(this.xCoord + 1, this.yCoord);
     }
 
     public XYPositionManager decreaseX() {
-       return new XYPositionManager(this.x - 1, this.y);
+       return new XYPositionManager(this.xCoord - 1, this.yCoord);
     }
 
     public XYPositionManager increaseY() {
-        return new XYPositionManager(this.x, this.y + 1);
+        return new XYPositionManager(this.xCoord, this.yCoord + 1);
     }
 
     public XYPositionManager decreaseY() {
-        return new XYPositionManager(this.x, this.y - 1);
+        return new XYPositionManager(this.xCoord, this.yCoord - 1);
     }
 
-    public int getX() {
-        return this.x;
-    }
+    public int getXCoord() {return this.xCoord;}
 
-    public int getY() {
-        return this.y;
-    }
+    public int getYCoord() {return this.yCoord;}
 }

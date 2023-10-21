@@ -3,12 +3,8 @@ package submarine.commands;
 import submarine.Nemo;
 
 public class TurnLeft extends Command {
-    public TurnLeft() {
-        this.identifier = 'l';
-    }
+    public TurnLeft() {this.identifier = 'l';}
 
     @Override
-    public void execute(Nemo nemo) {
-        nemo.orientationManager = nemo.orientationManager.turnLeftAsOrientation(nemo.orientationManager);
-    }
+    public void execute(Nemo nemo) {nemo.turnLeft();}
 }
