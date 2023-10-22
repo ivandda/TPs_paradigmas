@@ -17,16 +17,22 @@ public class Submarine {
         this.xyPositionManager = new XYPositionManager(0, 0);
     }
 
-    public Submarine(OrientationManager orientationManager, XYPositionManager xyPositionManager, DepthManager depthManager) {
+    public Submarine(OrientationManager orientationManager, XYPositionManager xyPositionManager) {
         this.orientationManager = orientationManager;
         this.xyPositionManager = xyPositionManager;
-        this.depthManager = depthManager;
+        this.depthManager = new Surface();
     }
 
 
-    public void executeInstructions(String instructions) {
+//    public void executeInstructions(String instructions) {
+//        this.instructionsManager.executeInstructions(instructions, this);
+//    }
+
+        public Submarine executeInstructions(String instructions) {
         this.instructionsManager.executeInstructions(instructions, this);
+        return this;
     }
+
 
     public void goUp() {
         depthManager = this.depthManager.goUpAsCurrentDepth();
