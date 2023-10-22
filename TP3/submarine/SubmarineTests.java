@@ -3,18 +3,12 @@ package submarine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import submarine.depth.DeepLevel;
-import submarine.depth.FirstLevelSubmerged;
-import submarine.depth.Surface;
-import submarine.orientation.EastOrientationManager;
-import submarine.orientation.NorthOrientationManager;
-import submarine.orientation.OrientationManager;
-import submarine.orientation.WestOrientationManager;
+import submarine.orientation.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static submarine.depth.DeepLevel.release_capsule_error;
-import static submarine.depth.Surface.cannot_go_up_from_surface_level_error;
+import static submarine.depth.DeeperUnderwaterManager.release_capsule_error;
+import static submarine.depth.SurfaceManager.cannot_go_up_from_surface_level_error;
 
 public class SubmarineTests {
     private Submarine nemo;
@@ -43,101 +37,106 @@ public class SubmarineTests {
         east = new EastOrientationManager();
         west = new WestOrientationManager();
         north = new NorthOrientationManager();
-        south = new NorthOrientationManager();
+        south = new SouthOrientationManager();
     }
 
 
     @Test
-    public void NemoStartsInDesiredPosWithDefaultConstructor() {
+    public void startsInDesiredPosWithDefaultConstructor() {
         assertEquals("Orientation: north X: 0 Y: 0 Z: 0", newNemo().getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoStartsInDesiredPosWithCustomConstructor() {
+    public void startsInDesiredPosWithCustomConstructorInNorth() {
         assertEquals("Orientation: north X: 0 Y: 0 Z: 0", newNemoWith(north, 0, 0).getAllCoordsAndOrientation());
     }
 
 
     @Test
-    public void NemoStartsInDesiredPosWithCustomConstructor2() {
+    public void startsInDesiredPosWithCustomConstructorInEast() {
         assertEquals("Orientation: east X: 3 Y: 5 Z: 0", newNemoWith(east, 3, 5).getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoStartsInDesiredPosWithCustomConstructor3() {
+    public void startsInDesiredPosWithCustomConstructorInWest() {
         assertEquals("Orientation: west X: 300 Y: 500 Z: 0", newNemoWith(west, 300, 500).getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoPositionDoesNotChangeWhenReceivingEmptyInstructions() {
+    public void startsInDesiredPosWithCustomConstructorInSouth() {
+        assertEquals("Orientation: south X: -300 Y: -500 Z: 0", newNemoWith(south, -300, -500).getAllCoordsAndOrientation());
+    }
+
+    @Test
+    public void positionDoesNotChangeWhenReceivingEmptyInstructions() {
         nemo.executeInstructions("");
         assertEquals("Orientation: north X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
 
     @Test
-    public void NemoGoesForwardWhenReceivingGoForwardInstruction() {
+    public void goesForwardWhenReceivingGoForwardInstruction() {
         nemo.executeInstructions("f");
         assertEquals("Orientation: north X: 1 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoTurnsLeftWhenReceivingTurnLeftInstruction() {
+    public void turnsLeftWhenReceivingTurnLeftInstruction() {
         nemo.executeInstructions("l");
         assertEquals("Orientation: west X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoTurnsRightWhenReceivingTurnRightInstruction() {
+    public void turnsRightWhenReceivingTurnRightInstruction() {
         nemo.executeInstructions("r");
         assertEquals("Orientation: east X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoGoesDownWhenReceivingGoDownInstruction() {
+    public void goesDownWhenReceivingGoDownInstruction() {
         nemo.executeInstructions("d");
         assertEquals("Orientation: north X: 0 Y: 0 Z: 1", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoGoesUpWhenReceivingGoUpInstruction() {
+    public void goesUpWhenReceivingGoUpInstruction() {
         newNemoWith(north, 0, 0)
                 .executeInstructions("du");
         assertEquals("Orientation: north X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    void NemoGoesForwardManyTimesWhenReceivingManyGoForwardInstructions() {
+    void goesForwardManyTimesWhenReceivingManyGoForwardInstructions() {
         nemo.executeInstructions("fff");
         assertEquals("Orientation: north X: 3 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    void NemoTurnsLeftManyTimesWhenReceivingManyTurnLeftInstructions() {
+    void turnsLeftManyTimesWhenReceivingManyTurnLeftInstructions() {
         nemo.executeInstructions("ll");
         assertEquals("Orientation: south X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    void NemoTurnsRightManyTimesWhenReceivingManyTurnRightInstructions() {
+    void turnsRightManyTimesWhenReceivingManyTurnRightInstructions() {
         nemo.executeInstructions("rr");
         assertEquals("Orientation: south X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    void NemogoesDownManyTimesWhenReceivingManyGoDownInstructions() {
+    void goesDownManyTimesWhenReceivingManyGoDownInstructions() {
         nemo.executeInstructions("ddddddd");
         assertEquals("Orientation: north X: 0 Y: 0 Z: 7", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    void NemoGoesDownAndThenUpWhenReceivingGoDownAndGoUpInstructions() {
+    void goesDownAndThenUpWhenReceivingGoDownAndGoUpInstructions() {
         nemo.executeInstructions("dudududdddddu");
         assertEquals("Orientation: north X: 0 Y: 0 Z: 5", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    void NemoReturnsToSurfaceCorrectlyWhenReceivingGoDownAndGoUpInstructions() {
+    void returnsToSurfaceCorrectlyWhenReceivingGoDownAndGoUpInstructions() {
         nemo.executeInstructions("ddduduuu");
         assertEquals("Orientation: north X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
@@ -159,12 +158,12 @@ public class SubmarineTests {
     }
 
     @Test
-    public void noEffectWhenReceivingReleaseCapsuleInstructionInACorrectPositionAscendingIncorrectPosition() {
+    public void noEffectWhenReceivingReleaseCapsuleInstructionInACorrectPositionAscendingFromIncorrectPosition() {
         nemo.executeInstructions("ddddddduuuuuum");
     }
 
     @Test
-    public void ExeptionWhenReceivingReleaseCapsuleInstructionInAnIncorrectPosition() {
+    public void exceptionWhenReceivingReleaseCapsuleInstructionInAnIncorrectPosition() {
         nemo.executeInstructions("dd");
         assertThrowsLike(() -> nemo.executeInstructions("m"), release_capsule_error);
     }
@@ -175,19 +174,19 @@ public class SubmarineTests {
     }
 
     @Test
-    public void NemoCanRecognizeCapitalizedInstructions() {
+    public void canRecognizeCapitalizedInstructions() {
         nemo.executeInstructions("DUDUDUMRRRR");
         assertEquals("Orientation: north X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoCanFilterNotValidInstructions() {
-        nemo.executeInstructions("1d@u#fZr!f*d&m|   (ㆆ _ ㆆ)    |");
+    public void canFilterInvalidInstructions() {
+        nemo.executeInstructions("¯|_(ツ)_|¯1d@u#fZr!f*d&m|   (ㆆ _ ㆆ)    |");
         assertEquals("Orientation: east X: 1 Y: 1 Z: 1", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    public void NemoCanReceiveMultipleInstructions() {
+    public void canReceiveMultipleInstructions() {
         nemo.executeInstructions("du")
                 .executeInstructions("rr")
                 .executeInstructions("ff")
@@ -202,14 +201,20 @@ public class SubmarineTests {
     }
 
     @Test
-    public void ComplexCommandsExecuteCorrectly() {
+    public void complexCommandsExecuteCorrectly() {
         nemo.executeInstructions("frflfdd");
         assertEquals("Orientation: north X: 2 Y: 1 Z: 2", nemo.getAllCoordsAndOrientation());
     }
 
     @Test
-    public void ComplexCommandsExecuteCorrectly2() {
-        assertEquals("Orientation: north X: 0 Y: 0 Z: 0", nemo.getAllCoordsAndOrientation());
+    public void complexCommandsExecuteCorrectly2() {
+        nemo.executeInstructions("mfmrmffrflfddlfddrfflff");
+        assertEquals("Orientation: north X: 3 Y: 5 Z: 4", nemo.getAllCoordsAndOrientation());
     }
 
+    @Test
+    public void complexCommandsExecuteCorrectly3() {
+        nemo.executeInstructions("mfmfrrmffmmlldfdrffdrflfduddlfdduudurdufufldfufdufdffdf");
+        assertEquals("Orientation: north X: 7 Y: 5 Z: 6", nemo.getAllCoordsAndOrientation());
+    }
 }

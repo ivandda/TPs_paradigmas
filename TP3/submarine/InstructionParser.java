@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import static java.lang.Character.toLowerCase;
 
-public class InstructionsManager {
+public class InstructionParser {
     private static ArrayList<Command> commands = new ArrayList<>(
             java.util.Arrays.asList(
                     new GoDown(),
@@ -18,12 +18,8 @@ public class InstructionsManager {
             )
     );
 
-    public void executeInstructions(String instructions, Submarine submarine) {
-        ArrayList<Command> validatedCommands = getCommands(instructions);
-        validatedCommands.forEach(command -> command.execute(submarine));
-    }
 
-    private ArrayList<Command> getCommands(String instructions) {
+    public ArrayList<Command> getCommands(String instructions) {
         ArrayList<Command> validatedCommands = new ArrayList<>();
 
         instructions.chars()

@@ -7,13 +7,13 @@ public class SouthOrientationManager extends OrientationManager {
         orientationName = "south";
     }
 
-    public XYPositionManager moveForwardAsOrientation(XYPositionManager xyPositionManager) {
+    public XYPositionManager moveForwardAsCurrentOrientation(XYPositionManager xyPositionManager) {
         return xyPositionManager.decreaseX();
     }
-    public OrientationManager turnRightAsOrientation(OrientationManager orientationManager) {
+    public OrientationManager turnRightAsCurrentOrientation(OrientationManager orientationManager) {
         return new WestOrientationManager();
     }
-    public OrientationManager turnLeftAsOrientation(OrientationManager orientationManager) {
+    public OrientationManager turnLeftAsCurrentOrientation(OrientationManager orientationManager) {
         return new EastOrientationManager();
     }
 }

@@ -6,13 +6,13 @@ public class EastOrientationManager extends OrientationManager {
     public EastOrientationManager() {
         orientationName = "east";
     }
-    public XYPositionManager moveForwardAsOrientation(XYPositionManager xyPositionManager) {
+    public XYPositionManager moveForwardAsCurrentOrientation(XYPositionManager xyPositionManager) {
         return xyPositionManager.increaseY();
     }
-    public OrientationManager turnRightAsOrientation(OrientationManager orientationManager) {
+    public OrientationManager turnRightAsCurrentOrientation(OrientationManager orientationManager) {
         return new SouthOrientationManager();
     }
-    public OrientationManager turnLeftAsOrientation(OrientationManager orientationManager) {
+    public OrientationManager turnLeftAsCurrentOrientation(OrientationManager orientationManager) {
         return new NorthOrientationManager();
     }
 }

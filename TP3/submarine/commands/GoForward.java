@@ -3,7 +3,7 @@ package submarine.commands;
 import submarine.Submarine;
 
 public class GoForward extends Command {
-    public GoForward() {this.identifier = 'f';}
+    public GoForward() {super('f');}
 
     @Override
     public void execute(Submarine submarine) {

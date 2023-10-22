@@ -3,7 +3,12 @@ package submarine.commands;
 import submarine.Submarine;
 
 public abstract class Command {
-    char identifier;
+    private char identifier;
+
+    public Command(char identifier) {
+        this.identifier = identifier;
+    }
+
 
     public boolean applies(char charToValidate) {return charToValidate == identifier;}
 
