@@ -1,10 +1,11 @@
 package submarine.commands;
 
-import submarine.Nemo;
+import submarine.Submarine;
 
 public class GoUp extends Command {
     public GoUp() {this.identifier = 'u';}
 
     @Override
-    public void execute(Nemo nemo) {nemo.goUp();}
+    public void execute(Submarine submarine) {
+        submarine.goUp();}
 }

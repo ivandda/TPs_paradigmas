@@ -18,9 +18,9 @@ public class InstructionsManager {
             )
     );
 
-    public void executeInstructions(String instructions, Nemo nemo) {
+    public void executeInstructions(String instructions, Submarine submarine) {
         ArrayList<Command> validatedCommands = getCommands(instructions);
-        validatedCommands.forEach(command -> command.execute(nemo));
+        validatedCommands.forEach(command -> command.execute(submarine));
     }
 
     private ArrayList<Command> getCommands(String instructions) {

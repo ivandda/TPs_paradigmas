@@ -3,7 +3,7 @@ package submarine.orientation;
 import submarine.XYPositionManager;
 
 public class WestOrientationManager extends OrientationManager {
-    WestOrientationManager() {
+    public WestOrientationManager() {
         orientationName = "west";
     }
     public XYPositionManager moveForwardAsOrientation(XYPositionManager xyPositionManager) {

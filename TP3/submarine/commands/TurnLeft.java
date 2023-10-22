@@ -1,10 +1,11 @@
 package submarine.commands;
 
-import submarine.Nemo;
+import submarine.Submarine;
 
 public class TurnLeft extends Command {
     public TurnLeft() {this.identifier = 'l';}
 
     @Override
-    public void execute(Nemo nemo) {nemo.turnLeft();}
+    public void execute(Submarine submarine) {
+        submarine.turnLeft();}
 }

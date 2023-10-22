@@ -5,19 +5,19 @@ import submarine.depth.Surface;
 import submarine.orientation.NorthOrientationManager;
 import submarine.orientation.OrientationManager;
 
-public class Nemo {
+public class Submarine {
     public InstructionsManager instructionsManager = new InstructionsManager();
     public OrientationManager orientationManager;
     public XYPositionManager xyPositionManager;
     public DepthManager depthManager;
 
-    public Nemo() {
+    public Submarine() {
         this.depthManager = new Surface();
         this.orientationManager = new NorthOrientationManager();
         this.xyPositionManager = new XYPositionManager(0, 0);
     }
 
-    public Nemo(OrientationManager orientationManager, XYPositionManager xyPositionManager, DepthManager depthManager) {
+    public Submarine(OrientationManager orientationManager, XYPositionManager xyPositionManager, DepthManager depthManager) {
         this.orientationManager = orientationManager;
         this.xyPositionManager = xyPositionManager;
         this.depthManager = depthManager;
