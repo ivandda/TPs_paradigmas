@@ -21,11 +21,11 @@ public class Nemo {
     }
 
     public void goUp() {
-        depthManager = this.depthManager.goUpAsCurrentDepth(this.depthManager);
+        depthManager = this.depthManager.goUpAsCurrentDepth();
     }
 
     public void goDown() {
-        depthManager = this.depthManager.goDownAsCurrentDepth(this.depthManager);
+        depthManager = depthManager.goDownAsCurrentDepth();
     }
 
     public void goForward() {

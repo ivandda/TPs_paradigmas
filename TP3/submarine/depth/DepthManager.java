@@ -1,31 +1,30 @@
 package submarine.depth;
 
-import java.util.ArrayList;
-
 public abstract class DepthManager {
-    private ArrayList<DepthManager> upperDepths = new java.util.ArrayList<>();
+    private DepthManager previousDepth;
+    private int xCoord;
 
     //    previousDepth
-    public abstract DepthManager goDownAsCurrentDepth(DepthManager depthManager);
+    public abstract DepthManager goDownAsCurrentDepth();
 
-    public abstract DepthManager goUpAsCurrentDepth(DepthManager depthManager);
-
-
-    public DepthManager appendToUpperDepths(DepthManager stateToAppend) {
-        upperDepths.add(stateToAppend);
-        return this;
-    }
-
-    public DepthManager appendToUpperDepths(ArrayList<DepthManager> statesToAppend) {
-        upperDepths.addAll(statesToAppend);
-        return this;
-    }
-
-    public ArrayList<DepthManager> getAllUpperDepth() {
-        return upperDepths;
-    }
+    public abstract DepthManager goUpAsCurrentDepth();
 
     public abstract void releaseCapsuleAsCurrentDepth();
 
-    public int getZ() {return upperDepths.size();}
+    public DepthManager getNextDownLevel(DepthManager nexDwnLevelDepthManager) {
+        return nexDwnLevelDepthManager.setxCoord(this.getxCoord() + 1).setPreviousDepth(this);
+    }
+
+    public DepthManager getPreviousDepth() {return previousDepth;}
+    public int getxCoord() {return xCoord;}
+
+    public DepthManager setPreviousDepth(DepthManager previousDepth) {
+        this.previousDepth = previousDepth;
+        return this;
+    }
+
+    public DepthManager setxCoord(int xCoord) {
+        this.xCoord = xCoord;
+        return this;
+    }
 }

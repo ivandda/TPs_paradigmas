@@ -2,13 +2,12 @@ package submarine.depth;
 
 public class FirstLevelSubmerged extends DepthManager{
     @Override
-    public DepthManager goDownAsCurrentDepth(DepthManager depthManager) {
-        DepthManager nextDepth = new DeepLevel();
-        return nextDepth.appendToUpperDepths(this.getAllUpperDepth()).appendToUpperDepths(this);
+    public DepthManager goDownAsCurrentDepth() {
+        return getNextDownLevel(new DeepLevel());
     }
 
     @Override
-    public DepthManager goUpAsCurrentDepth(DepthManager depthManager) {
+    public DepthManager goUpAsCurrentDepth() {
         return new Surface();
     }
 

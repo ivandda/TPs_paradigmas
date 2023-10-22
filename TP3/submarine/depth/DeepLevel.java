@@ -1,20 +1,22 @@
 package submarine.depth;
 
 public class DeepLevel extends DepthManager {
+
+    public static final String release_capsule_error = "Cannot release capsule from more than first level submerged";
+
     @Override
-    public DepthManager goDownAsCurrentDepth(DepthManager depthManager) {
-        DepthManager nextDepth = new DeepLevel();
-        return nextDepth.appendToUpperDepths(this.getAllUpperDepth()).appendToUpperDepths(this);
+    public DepthManager goDownAsCurrentDepth() {
+        return getNextDownLevel(new DeepLevel());
     }
 
     @Override
-    public DepthManager goUpAsCurrentDepth(DepthManager depthManager) {
-        return this.getAllUpperDepth().get(this.getAllUpperDepth().size() - 1);
+    public DepthManager goUpAsCurrentDepth() {
+        return this.getPreviousDepth();
     }
 
     @Override
     public void releaseCapsuleAsCurrentDepth() {
-        throw new RuntimeException("Cannot release capsule from more than first level submerged");
+        throw new RuntimeException(release_capsule_error);
     }
 
 }
