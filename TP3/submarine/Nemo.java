@@ -7,14 +7,22 @@ import submarine.orientation.OrientationManager;
 
 public class Nemo {
     public InstructionsManager instructionsManager = new InstructionsManager();
-    public OrientationManager orientationManager = new NorthOrientationManager();
+    public OrientationManager orientationManager;
     public XYPositionManager xyPositionManager;
     public DepthManager depthManager;
 
     public Nemo() {
-        this.xyPositionManager = new XYPositionManager();
         this.depthManager = new Surface();
+        this.orientationManager = new NorthOrientationManager();
+        this.xyPositionManager = new XYPositionManager(0, 0);
     }
+
+    public Nemo(OrientationManager orientationManager, XYPositionManager xyPositionManager, DepthManager depthManager) {
+        this.orientationManager = orientationManager;
+        this.xyPositionManager = xyPositionManager;
+        this.depthManager = depthManager;
+    }
+
 
     public void executeInstructions(String instructions) {
         this.instructionsManager.executeInstructions(instructions, this);
@@ -44,6 +52,8 @@ public class Nemo {
         orientationManager = this.orientationManager.turnRightAsOrientation(this.orientationManager);
     }
 
+    public String getAllCoordsAndOrientation() {
+        return "Orientation: " + orientationManager.getOrientationName() + " X: " + xyPositionManager.getXCoord() + " Y: " +
+                xyPositionManager.getYCoord() + " Z: " + depthManager.getZCoord();
+    }
 }
-
-//pasarle Clases a nemo

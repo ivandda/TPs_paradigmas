@@ -4,7 +4,6 @@ public abstract class DepthManager {
     private DepthManager previousDepth;
     private int zCoord;
 
-    //    previousDepth
     public abstract DepthManager goDownAsCurrentDepth();
 
     public abstract DepthManager goUpAsCurrentDepth();
@@ -23,7 +22,7 @@ public abstract class DepthManager {
         return this;
     }
 
-    public DepthManager setZCoord(int zCoord) {
+    private DepthManager setZCoord(int zCoord) {
         this.zCoord = zCoord;
         return this;
     }

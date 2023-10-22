@@ -4,11 +4,6 @@ public class XYPositionManager {
     private int xCoord;
     private int yCoord;
 
-    public XYPositionManager() {
-        this.xCoord = 0;
-        this.yCoord = 0;
-    }
-
     public XYPositionManager(int xCoord, int yCoord) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
