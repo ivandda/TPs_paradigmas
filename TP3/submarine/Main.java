@@ -8,7 +8,7 @@ public class Main {
         System.out.println(nemo.xyPositionManager.getXCoord());
         System.out.println(nemo.xyPositionManager.getYCoord());
         System.out.println(nemo.orientationManager.getOrientationName());
-        System.out.println(nemo.depthManager.getxCoord());
+        System.out.println(nemo.depthManager.getZCoord());
 
 //        Nemo nemo2 = new Nemo(99,99,"EAST");
 //        nemo.instructionsManager.executeInstructions("ddu@@@@@uduffmmmMMMMMDUMRRFF", nemo);
