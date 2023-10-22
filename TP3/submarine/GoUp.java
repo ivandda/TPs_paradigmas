@@ -1,6 +1,4 @@
-package submarine.commands;
-
-import submarine.Submarine;
+package submarine;
 
 public class GoUp extends Command {
     public GoUp() {super('u');}

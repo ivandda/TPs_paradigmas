@@ -1,7 +1,5 @@
 package submarine;
 
-import submarine.commands.*;
-
 import java.util.ArrayList;
 
 import static java.lang.Character.toLowerCase;

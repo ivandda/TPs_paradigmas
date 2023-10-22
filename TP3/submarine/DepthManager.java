@@ -1,4 +1,4 @@
-package submarine.depth;
+package submarine;
 
 public abstract class DepthManager {
     private DepthManager previousDepth;

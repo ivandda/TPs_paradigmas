@@ -1,6 +1,4 @@
-package submarine.commands;
-
-import submarine.Submarine;
+package submarine;
 
 public class ReleaseCapsule extends Command {
     public ReleaseCapsule() {super('m');}

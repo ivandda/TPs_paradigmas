@@ -1,6 +1,4 @@
-package submarine.orientation;
-
-import submarine.XYPositionManager;
+package submarine;
 
 public class WestOrientationManager extends OrientationManager {
     public WestOrientationManager() {

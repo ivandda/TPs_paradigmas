@@ -1,6 +1,4 @@
-package submarine.commands;
-
-import submarine.Submarine;
+package submarine;
 
 public abstract class Command {
     private char identifier;

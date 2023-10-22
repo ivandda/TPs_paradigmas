@@ -1,11 +1,5 @@
 package submarine;
 
-import submarine.commands.Command;
-import submarine.depth.DepthManager;
-import submarine.depth.SurfaceManager;
-import submarine.orientation.NorthOrientationManager;
-import submarine.orientation.OrientationManager;
-
 import java.util.ArrayList;
 
 public class Submarine {

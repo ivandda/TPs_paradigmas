@@ -1,5 +1,4 @@
-package submarine.commands;
-import submarine.Submarine;
+package submarine;
 
 public class TurnRight extends Command {
     public TurnRight() {super('r');}

@@ -3,12 +3,11 @@ package submarine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import submarine.orientation.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static submarine.depth.DeeperUnderwaterManager.release_capsule_error;
-import static submarine.depth.SurfaceManager.cannot_go_up_from_surface_level_error;
+import static submarine.DeeperUnderwaterManager.release_capsule_error;
+import static submarine.SurfaceManager.cannot_go_up_from_surface_level_error;
 
 public class SubmarineTests {
     private Submarine nemo;

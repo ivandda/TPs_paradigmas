@@ -1,6 +1,4 @@
-package submarine.commands;
-
-import submarine.Submarine;
+package submarine;
 
 public class GoForward extends Command {
     public GoForward() {super('f');}

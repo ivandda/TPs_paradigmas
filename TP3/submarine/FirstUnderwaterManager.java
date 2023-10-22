@@ -1,4 +1,4 @@
-package submarine.depth;
+package submarine;
 
 public class FirstUnderwaterManager extends DepthManager{
     @Override

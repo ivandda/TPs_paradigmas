@@ -1,4 +1,4 @@
-package submarine.depth;
+package submarine;
 
 public class DeeperUnderwaterManager extends DepthManager {
 

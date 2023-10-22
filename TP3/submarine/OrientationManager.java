@@ -1,6 +1,4 @@
-package submarine.orientation;
-
-import submarine.XYPositionManager;
+package submarine;
 
 public abstract class OrientationManager {
     String orientationName;
