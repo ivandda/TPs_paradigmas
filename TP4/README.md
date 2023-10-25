@@ -1,3 +1,14 @@
+## Instrucciones
+
+Para compilar el código ejecutar fuera del paquete linea lo siguiente:
+```
+javac linea/Linea.java linea/Game.java
+```
+Para correr el juego ejecutar los siguiente:
+```
+java linea.Game
+```
+
 ## Enunciado
 
 - La fecha de entrega es Domingo 12 de noviembre, 23:59 hs
@@ -71,15 +82,6 @@ private static int prompt( String message ) {
 }
 
 }
-
-
-
-Para compilar el código ejecutar fuera del paquete linea lo siguiente:
-
-javac linea/Linea.java linea/Game.java
-
-Para correr el juego ejecutar los siguiente:
-
-java linea.Game 
+ 
 
 ```
