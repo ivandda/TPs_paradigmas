@@ -22,7 +22,9 @@ La variante de triunfo puede ser,
 - 'A' solo 4 en línea verticales u horizontales.
 - 'B' solo 4 en línea diagonales
 - 'C' 4 en línea en cualquier orientación.
-  Inician el juego las Rojas y alternan los turnos a partir de ahí
+
+
+Inician el juego las Rojas y alternan los turnos a partir de ahí
   El juego puede terminar por triunfo o por empate. Una vez terminado no se puede seguir colocando fichas
 
 Es requisito cumplir con todos los criterios vistos a lo largo de la cursada.
@@ -85,3 +87,13 @@ private static int prompt( String message ) {
  
 
 ```
+
+## Notas
+
+- No hay clases para tablero, ficha y jugador
+  - Son cosas que nombramos mucho en el juego, pero no tienen que existir como entidades en el código
+- Ver que pasa si se llena el tablero y nadie gana (condición de empate)
+- Fallar si:
+  - Un jugador juega y no es su turno
+  - Se ponen mas fichas de las que se puede en una columna
+    - Decidir si solo se lanza una excepcion o si se le permite volver a elegir
