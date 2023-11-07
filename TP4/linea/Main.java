@@ -20,8 +20,12 @@ public class Main {
 
         System.out.println(linea1.checkHorizontalWin('R'));
         System.out.println(linea1.checkHorizontalWin('B'));
+//        System.out.println(linea1.finished());
         System.out.println(linea1.checkVerticalWin('R'));
+//        System.out.println(linea1.finished());
         System.out.println(linea1.checkVerticalWin('B'));
+
+
     }
 }
 

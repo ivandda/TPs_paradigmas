@@ -8,6 +8,8 @@ public class Linea {
     public static final char bluePiece = 'B';
     public static final char emptyPiece = 'X';
     public static final String mensaje_tablero_negativo = "No se puede crear tableros negativos";
+
+//    private Turn turno;
     int base;
     int height;
 
@@ -19,6 +21,7 @@ public class Linea {
         }
         this.base = promptBase;
         this.height = promptHeight;
+//        this.turno = new RedTurn();
 
         for (int i = 0; i < this.base; i++) {
             this.board.add(new ArrayList<>());
