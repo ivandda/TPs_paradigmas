@@ -12,7 +12,7 @@ public class Linea {
 //    private Turn turno;
     int base;
     int height;
-    CurrentTurn currentTurn;
+    GameState gameState;
 
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
 
@@ -22,7 +22,7 @@ public class Linea {
         }
         this.base = promptBase;
         this.height = promptHeight;
-        this.currentTurn = new RedTurn();
+        this.gameState = new RedTurn();
 
         for (int i = 0; i < this.base; i++) {
             this.board.add(new ArrayList<>());
@@ -37,15 +37,15 @@ public class Linea {
     public void playRedkAt(int prompt) {
 //        board.get(prompt).add(redPiece);
 //        currentTurn.playAsRedAt(prompt);
-        currentTurn.playAsRedAt(prompt, board);
-        currentTurn = new BlueTurn();
+        gameState.playAsRedAt(prompt, board);
+//        gameState = new BlueTurn();
     }
 
 
     public void playBlueAt(int prompt) {
 //        board.get(prompt).add(bluePiece);
-        currentTurn.playAsBlueAt(prompt, board);
-        currentTurn = new RedTurn();
+        gameState.playAsBlueAt(prompt, board);
+//        gameState = new RedTurn();
     }
 
 //    public char getPiece(int x, int y) {
@@ -57,14 +57,18 @@ public class Linea {
 //    }
 
     public char getPiece(int x, int y) {
-        if (spaceCouldBeOccupied(x, y)) {
+        if (isOccupied(x, y)) {
             return board.get(x).get(y);
         } else {
             return emptyPiece;
         }
     }
 
-    private boolean spaceCouldBeOccupied(int x, int y) {
+    public boolean isCurrentPlayerPiece(int x, int y) {
+        return getPiece(x, y) == gameState.getPiece();
+    }
+
+    private boolean isOccupied(int x, int y) {
         return x < base && y < height && y < board.get(x).size();
     }
 
@@ -77,7 +81,8 @@ public class Linea {
         return IntStream.range(0, base)
                 .anyMatch(i -> IntStream.range(0, height - 3)
                         .anyMatch(j -> IntStream.range(0, 4)
-                                .allMatch(k -> getPiece(i, j + k) == pieceType)
+                                        .allMatch(k -> isCurrentPlayerPiece(i, j + k))
+//                                .allMatch(k -> getPiece(i, j + k) == pieceType)
                         )
                 );
     }
@@ -86,7 +91,8 @@ public class Linea {
         return IntStream.range(0, base - 3)
                 .anyMatch(i -> IntStream.range(0, height)
                         .anyMatch(j -> IntStream.range(0, 4)
-                                .allMatch(k -> getPiece(i + k, j) == pieceType)
+                                .allMatch(k -> isCurrentPlayerPiece(i, j + k))
+//                                .allMatch(k -> getPiece(i + k, j) == pieceType)
                         )
                 );
     }
