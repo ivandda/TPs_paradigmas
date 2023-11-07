@@ -12,6 +12,7 @@ public class Linea {
 //    private Turn turno;
     int base;
     int height;
+    CurrentTurn currentTurn;
 
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
 
@@ -21,7 +22,7 @@ public class Linea {
         }
         this.base = promptBase;
         this.height = promptHeight;
-//        this.turno = new RedTurn();
+        this.currentTurn = new RedTurn();
 
         for (int i = 0; i < this.base; i++) {
             this.board.add(new ArrayList<>());
@@ -34,12 +35,17 @@ public class Linea {
 
 
     public void playRedkAt(int prompt) {
-        board.get(prompt).add(redPiece);
+//        board.get(prompt).add(redPiece);
+//        currentTurn.playAsRedAt(prompt);
+        currentTurn.playAsRedAt(prompt, board);
+        currentTurn = new BlueTurn();
     }
 
 
     public void playBlueAt(int prompt) {
-        board.get(prompt).add(bluePiece);
+//        board.get(prompt).add(bluePiece);
+        currentTurn.playAsBlueAt(prompt, board);
+        currentTurn = new RedTurn();
     }
 
 //    public char getPiece(int x, int y) {

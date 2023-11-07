@@ -1,15 +1,19 @@
 package linea;
 
-public class RedTurn extends Turn{
+import java.util.ArrayList;
+
+public class RedTurn extends CurrentTurn {
     char charIdentifier = 'R';
 
     @Override
-    public void playAsRedAt(int position) {
-
+    public ArrayList<ArrayList<Character>> playAsRedAt(int position, ArrayList<ArrayList<Character>> board) {
+        ArrayList<ArrayList<Character>> newBoard = board;
+        newBoard.get(position).add(charIdentifier);
+        return newBoard;
     }
 
     @Override
-    public void playAsBlueAt(int position) {
-
+    public ArrayList<ArrayList<Character>> playAsBlueAt(int position, ArrayList<ArrayList<Character>> board) {
+        return board;
     }
 }
