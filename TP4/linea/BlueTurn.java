@@ -15,8 +15,7 @@ public class BlueTurn extends GameState {
 
     @Override
     public ArrayList<ArrayList<Character>> playAsBlueAt(int position, ArrayList<ArrayList<Character>> board) {
-        ArrayList<ArrayList<Character>> newBoard = board;
-        newBoard.get(position).add(getPiece());
-        return newBoard;
+        board.get(position).add(getPiece());
+        return board;
     }
 }
