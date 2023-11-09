@@ -34,7 +34,7 @@ public class Main {
         linea1.playBlueAt(1);
         linea1.playRedkAt(1);
 
-        linea1.playBlueAt(0);
+//        linea1.playBlueAt(0);
 
 
 

@@ -55,7 +55,6 @@ public class Linea {
     }
 
 
-
     public char getPiece(int x, int y) {
         if (isOccupied(x, y)) {
             return board.get(x).get(y);
@@ -76,18 +75,18 @@ public class Linea {
     public boolean checkVerticalWin(char pieceType) {
         return IntStream.range(0, base)
                 .anyMatch(i -> IntStream.range(0, height - 3)
-                                .anyMatch(j -> IntStream.range(0, 4)
-                                                .allMatch(k -> getPiece(i, j + k) == pieceType)
-                                )
+                        .anyMatch(j -> IntStream.range(0, 4)
+                                .allMatch(k -> getPiece(i, j + k) == pieceType)
+                        )
                 );
     }
 
     public boolean checkHorizontalWin(char pieceType) {
         return IntStream.range(0, base - 3)
                 .anyMatch(i -> IntStream.range(0, height)
-                                .anyMatch(j -> IntStream.range(0, 4)
-                                                .allMatch(k -> getPiece(i + k, j) == pieceType)
-                                )
+                        .anyMatch(j -> IntStream.range(0, 4)
+                                .allMatch(k -> getPiece(i + k, j) == pieceType)
+                        )
                 );
     }
 
@@ -100,12 +99,65 @@ public class Linea {
     }
 
 
-    public String show() {
-        return  "show()";
-    }
-
     public boolean finished() {
         return false;
+    }
+
+    public String show() {
+        String baseStr = String.valueOf(base);
+        String heightStr = String.valueOf(height);
+
+        StringBuilder boardString = new StringBuilder();
+
+        // Box-drawing characters for the corners and horizontal/vertical dividers
+        // Deberian ser constantes
+        char horizontalLine = '─';
+        char verticalLine = '│';
+        char cross = '┼';
+
+        StringBuilder rowHeaderBuilder = new StringBuilder();
+        rowHeaderBuilder.append(" ".repeat(heightStr.length() + 1));
+        rowHeaderBuilder.append(cross);
+
+        IntStream.range(0, base).forEach(i -> {
+            rowHeaderBuilder.append(horizontalLine).append(horizontalLine).append(horizontalLine);
+            rowHeaderBuilder.append(cross);
+        });
+        rowHeaderBuilder.append("\n");
+        boardString.append(rowHeaderBuilder.toString());
+
+        // Add board representation and row index numbers
+        StringBuilder rowBuilder = new StringBuilder();
+        IntStream.range(0, height).forEach(i -> {
+            int rowNumber = i + 1;
+            rowBuilder.append(rowNumber).append(" ".repeat(heightStr.length() - String.valueOf(rowNumber).length() + 1)).append(verticalLine);
+            IntStream.range(0, base).forEach(j -> {
+                rowBuilder.append(" ").append(getPiece(j, height - 1 - i)).append(" ");
+                rowBuilder.append(verticalLine);
+            });
+            rowBuilder.append("\n");
+
+            rowBuilder.append(" ").append(" ".repeat(heightStr.length())).append(cross);
+            IntStream.range(0, base).forEach(j -> {
+                rowBuilder.append(horizontalLine).append(horizontalLine).append(horizontalLine);
+                rowBuilder.append(cross);
+            });
+
+            rowBuilder.append("\n");
+        });
+        boardString.append(rowBuilder.toString());
+
+        // Add column index numbers
+        StringBuilder rowFooterBuilder = new StringBuilder();
+
+        rowFooterBuilder.append(" ".repeat(heightStr.length()));
+        IntStream.range(0, base).forEach(i -> {
+            rowFooterBuilder.append(" ".repeat(4 - String.valueOf(i + 1).length()));
+            rowFooterBuilder.append(i + 1);
+        });
+        rowFooterBuilder.append("\n");
+        boardString.append(rowFooterBuilder.toString());
+        return boardString.toString();
     }
 }
 
