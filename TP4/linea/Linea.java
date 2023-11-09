@@ -104,6 +104,7 @@ public class Linea {
     }
 
     public String show() {
+        //this was made by demdeo
         String baseStr = String.valueOf(base);
         String heightStr = String.valueOf(height);
 
