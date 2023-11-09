@@ -9,7 +9,7 @@ public class Linea {
     public static final char emptyPiece = 'X';
     public static final String mensaje_tablero_negativo = "No se puede crear tableros negativos";
 
-//    private Turn turno;
+    //    private Turn turno;
     int base;
     int height;
     GameState gameState;
@@ -24,37 +24,37 @@ public class Linea {
         this.height = promptHeight;
         this.gameState = new RedTurn();
 
+
         for (int i = 0; i < this.base; i++) {
             this.board.add(new ArrayList<>());
         }
     }
 
-    public String show() {
-        return "Base: " + this.base + "\nAltura: " + this.height + "\n" + this.board.toString();
-    }
-
 
     public void playRedkAt(int prompt) {
-//        board.get(prompt).add(redPiece);
-//        currentTurn.playAsRedAt(prompt);
-        gameState.playAsRedAt(prompt, board);
-//        gameState = new BlueTurn();
+        prompt = prompt - 1;
+        checkSpaceAvailability(prompt);
+        gameState.checkRedCanPlay();
+        board.get(prompt).add(redPiece);
+        gameState = new BlueTurn();
+        checkWin(redPiece);
     }
-
 
     public void playBlueAt(int prompt) {
-//        board.get(prompt).add(bluePiece);
-        gameState.playAsBlueAt(prompt, board);
-//        gameState = new RedTurn();
+        prompt = prompt - 1;
+        checkSpaceAvailability(prompt);
+        gameState.checkBlueCanPlay();
+        board.get(prompt).add(bluePiece);
+        gameState = new RedTurn();
     }
 
-//    public char getPiece(int x, int y) {
-//        try {
-//            return board.get(x).get(y);
-//        } catch (Exception e) {
-//            return emptyPiece;
-//        }
-//    }
+    private void checkSpaceAvailability(int prompt) {
+        if (prompt < 0 || prompt >= base || board.get(prompt).size() >= height) {
+            throw new IllegalArgumentException("No se puede jugar en esa posicion");
+        }
+    }
+
+
 
     public char getPiece(int x, int y) {
         if (isOccupied(x, y)) {
@@ -62,10 +62,6 @@ public class Linea {
         } else {
             return emptyPiece;
         }
-    }
-
-    public boolean isCurrentPlayerPiece(int x, int y) {
-        return getPiece(x, y) == gameState.getPiece();
     }
 
     private boolean isOccupied(int x, int y) {
@@ -80,20 +76,18 @@ public class Linea {
     public boolean checkVerticalWin(char pieceType) {
         return IntStream.range(0, base)
                 .anyMatch(i -> IntStream.range(0, height - 3)
-                        .anyMatch(j -> IntStream.range(0, 4)
-                                        .allMatch(k -> isCurrentPlayerPiece(i, j + k))
-//                                .allMatch(k -> getPiece(i, j + k) == pieceType)
-                        )
+                                .anyMatch(j -> IntStream.range(0, 4)
+                                                .allMatch(k -> getPiece(i, j + k) == pieceType)
+                                )
                 );
     }
 
     public boolean checkHorizontalWin(char pieceType) {
         return IntStream.range(0, base - 3)
                 .anyMatch(i -> IntStream.range(0, height)
-                        .anyMatch(j -> IntStream.range(0, 4)
-                                .allMatch(k -> isCurrentPlayerPiece(i, j + k))
-//                                .allMatch(k -> getPiece(i + k, j) == pieceType)
-                        )
+                                .anyMatch(j -> IntStream.range(0, 4)
+                                                .allMatch(k -> getPiece(i + k, j) == pieceType)
+                                )
                 );
     }
 
@@ -101,8 +95,17 @@ public class Linea {
 //    }
 
 
-    public boolean finished() {
+    public boolean isFinished() {
         return checkWin(redPiece) || checkWin(bluePiece);
+    }
+
+
+    public String show() {
+        return  "show()";
+    }
+
+    public boolean finished() {
+        return false;
     }
 }
 

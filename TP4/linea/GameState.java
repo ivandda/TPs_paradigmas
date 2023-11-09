@@ -3,11 +3,10 @@ package linea;
 import java.util.ArrayList;
 
 public abstract class GameState {
-    public abstract ArrayList<ArrayList<Character>> playAsRedAt(int position, ArrayList<ArrayList<Character>> board);
-
-    public abstract ArrayList<ArrayList<Character>> playAsBlueAt(int position, ArrayList<ArrayList<Character>> board);
-
-    public abstract char getPiece();
+    protected String blueCantPlayMessage = "Blue cant play in this round";
+    protected String redCantPlayMessage = "Red cant play in this round";
+    public abstract void checkRedCanPlay();
+    public abstract void checkBlueCanPlay();
 
 
 }
