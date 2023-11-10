@@ -9,10 +9,9 @@ public class Linea {
     public static final char emptyPiece = 'X';
     public static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
 
-    //    private Turn turno;
-    int base;
-    int height;
-    GameState gameState;
+    private int base;
+    private int height;
+    private GameState gameState;
 
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
 
@@ -35,7 +34,7 @@ public class Linea {
         prompt = prompt - 1;
         checkSpaceAvailability(prompt);
         gameState.checkRedCanPlay();
-        board.get(prompt).add(redPiece);
+        addPiece(prompt, redPiece);
         gameState = new BlueTurn();
         checkWin(redPiece);
     }
@@ -44,8 +43,13 @@ public class Linea {
         prompt = prompt - 1;
         checkSpaceAvailability(prompt);
         gameState.checkBlueCanPlay();
-        board.get(prompt).add(bluePiece);
+        addPiece(prompt, bluePiece);
         gameState = new RedTurn();
+        checkWin(bluePiece);
+    }
+
+    public void addPiece(int column, char pieceType) {
+        board.get(column).add(pieceType);
     }
 
     private void checkSpaceAvailability(int prompt) {
