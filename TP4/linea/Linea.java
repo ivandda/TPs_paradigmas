@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class Linea {
+//    add Getters
     public static final char redPiece = 'R';
     public static final char bluePiece = 'B';
     public static final char emptyPiece = 'X';
@@ -12,6 +13,13 @@ public class Linea {
     private int base;
     private int height;
     private GameState gameState;
+    private GameMode gameMode;
+
+//    private ArrayList<GameMode> possibleGameModes = new ArrayList<>();
+//    possibleGameModes.add(new GMA());
+//    possibleGameModes.add(new GMB());
+//    possibleGameModes.add(new GMC());
+
 
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
 
@@ -19,6 +27,7 @@ public class Linea {
         if (promptBase <= 0 || promptHeight <= 0) {
             throw new IllegalArgumentException(mensaje_tablero_invalido);
         }
+
         this.base = promptBase;
         this.height = promptHeight;
         this.gameState = new RedTurn();
