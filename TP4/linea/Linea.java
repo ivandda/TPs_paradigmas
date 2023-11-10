@@ -7,7 +7,7 @@ public class Linea {
     public static final char redPiece = 'R';
     public static final char bluePiece = 'B';
     public static final char emptyPiece = 'X';
-    public static final String mensaje_tablero_negativo = "No se puede crear tableros negativos";
+    public static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
 
     //    private Turn turno;
     int base;
@@ -17,8 +17,8 @@ public class Linea {
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
 
     public Linea(int promptBase, int promptHeight, char c) {
-        if (promptBase < 0 || promptHeight < 0) {
-            throw new IllegalArgumentException(mensaje_tablero_negativo);
+        if (promptBase <= 0 || promptHeight <= 0) {
+            throw new IllegalArgumentException(mensaje_tablero_invalido);
         }
         this.base = promptBase;
         this.height = promptHeight;
@@ -164,3 +164,5 @@ public class Linea {
 
 
 //no se puede crear tableros negativos
+// Co-authored-by: demdeo <demdeo@gmail.com>
+// Co-authored-by: ivandda <ivandominguezdealzaga@gmail.com>
