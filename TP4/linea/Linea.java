@@ -4,24 +4,21 @@ import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class Linea {
-//    add Getters
+    //    add Getters
     public static final char redPiece = 'R';
     public static final char bluePiece = 'B';
     public static final char emptyPiece = 'X';
     public static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
-
+    ArrayList<ArrayList<Character>> board = new ArrayList<>();
     private int base;
     private int height;
     private GameState gameState;
-    private GameMode gameMode;
 
 //    private ArrayList<GameMode> possibleGameModes = new ArrayList<>();
 //    possibleGameModes.add(new GMA());
 //    possibleGameModes.add(new GMB());
 //    possibleGameModes.add(new GMC());
-
-
-    ArrayList<ArrayList<Character>> board = new ArrayList<>();
+    private GameMode gameMode;
 
     public Linea(int promptBase, int promptHeight, char c) {
         if (promptBase <= 0 || promptHeight <= 0) {
@@ -33,17 +30,13 @@ public class Linea {
         this.gameState = new RedTurn();
         this.gameMode = GameMode.setGameMode(c);
 
-//make this but with stream()
-//        for (int i = 0; i < this.base; i++) {
-//            this.board.add(new ArrayList<>());
-//        }
 
-            IntStream.range(0, this.base).forEach(i -> this.board.add(new ArrayList<>()));
+        IntStream.range(0, this.base).forEach(i -> this.board.add(new ArrayList<>()));
     }
 
 
     public void playRedkAt(int prompt) {
-        prompt = prompt - 1;
+        prompt = offsetPromptToStartInOne(prompt);
         checkSpaceAvailability(prompt);
         gameState.checkRedCanPlay();
         addPiece(prompt, redPiece);
@@ -51,13 +44,19 @@ public class Linea {
         checkWin(redPiece);
     }
 
+
+
     public void playBlueAt(int prompt) {
-        prompt = prompt - 1;
+        prompt = offsetPromptToStartInOne(prompt);
         checkSpaceAvailability(prompt);
         gameState.checkBlueCanPlay();
         addPiece(prompt, bluePiece);
         gameState = new RedTurn();
         checkWin(bluePiece);
+    }
+
+    private static int offsetPromptToStartInOne(int prompt) {
+        return prompt -1;
     }
 
     public void addPiece(int column, char pieceType) {
