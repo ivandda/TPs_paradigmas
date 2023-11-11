@@ -31,11 +31,14 @@ public class Linea {
         this.base = promptBase;
         this.height = promptHeight;
         this.gameState = new RedTurn();
+        this.gameMode = GameMode.setGameMode(c);
 
+//make this but with stream()
+//        for (int i = 0; i < this.base; i++) {
+//            this.board.add(new ArrayList<>());
+//        }
 
-        for (int i = 0; i < this.base; i++) {
-            this.board.add(new ArrayList<>());
-        }
+            IntStream.range(0, this.base).forEach(i -> this.board.add(new ArrayList<>()));
     }
 
 
