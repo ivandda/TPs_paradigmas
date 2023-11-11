@@ -25,14 +25,19 @@ public class Main {
 ////        System.out.println(linea1.finished());
 //        System.out.println(linea1.checkVerticalWin('B'));
 
-        Linea linea1 = new Linea(10, 10, 'A');
+        Linea linea1 = new Linea(10, 10, 'C');
 
         System.out.println(linea1.show());
         linea1.playRedkAt(1);
-        linea1.playBlueAt(1);
+        linea1.playBlueAt(2);
         linea1.playRedkAt(1);
-        linea1.playBlueAt(1);
+        linea1.playBlueAt(2);
         linea1.playRedkAt(1);
+        linea1.playBlueAt(2);
+        linea1.playRedkAt(1);
+//        linea1.playBlueAt(2);
+//        linea1.playRedkAt(1);
+//        linea1.playRedkAt(1);
 
 //        linea1.playBlueAt(0);
 

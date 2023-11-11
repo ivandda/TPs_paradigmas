@@ -8,5 +8,4 @@ public abstract class GameState {
     public abstract void checkRedCanPlay();
     public abstract void checkBlueCanPlay();
 
-
 }

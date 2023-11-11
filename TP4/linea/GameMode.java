@@ -2,12 +2,12 @@ package linea;
 
 import java.util.ArrayList;
 
-public class GameMode {
+public abstract class GameMode {
     public static final String invalid_game_mode_choice = "Invalid game mode reference";
     private static ArrayList<GameMode> possibleGameModes = new ArrayList<>(java.util.Arrays.asList(
-            new GMA(),
-            new GMB(),
-            new GMC()
+            new HorizontalOrVertical(),
+            new Diagonals(),
+            new HorizontalOrVerticalOrDiagonal()
     ));
     protected char identifier;
 
@@ -21,4 +21,6 @@ public class GameMode {
     public boolean applies(char gameModeIdentifier) {
         return identifier == gameModeIdentifier;
     }
+
+    public abstract boolean checkWin(Linea linea, char bluePiece);
 }

@@ -45,8 +45,7 @@ public class Linea {
         gameState.checkRedCanPlay();
         addPiece(prompt, redPiece);
         gameState = new BlueTurn();
-        checkWin(redPiece);
-//        gameMode.checkWin(this, redPiece);
+        System.out.println(gameMode.checkWin(this, redPiece));
     }
 
 
@@ -57,7 +56,7 @@ public class Linea {
         gameState.checkBlueCanPlay();
         addPiece(prompt, bluePiece);
         gameState = new RedTurn();
-        checkWin(bluePiece);
+        System.out.println(gameMode.checkWin(this, bluePiece));
     }
 
     private static int offsetPromptToStartInOne(int prompt) {
@@ -75,9 +74,17 @@ public class Linea {
     }
 
 
+//    public char getPiece(int column, int row) {
+//        if (isOccupied(column, row)) {
+//            return board.get(column).get(row);
+//        }
+//        return emptyPiece;
+//    }
+
     public char getPiece(int column, int row) {
-        return board.get(column).stream()
-                .filter(piece -> isOccupied(column, row))
+        return IntStream.range(0, base)
+                .filter(x -> x == column && isOccupied(x, row))
+                .mapToObj(x -> board.get(x).get(row))
                 .findFirst()
                 .orElse(emptyPiece);
     }
@@ -87,9 +94,6 @@ public class Linea {
     }
 
 
-    private boolean checkWin(char pieceType) {
-        return checkHorizontalWin(pieceType) || checkVerticalWin(pieceType);
-    }
 
     public boolean checkVerticalWin(char pieceType) {
         return IntStream.range(0, base)
@@ -120,19 +124,18 @@ public class Linea {
         boolean rightToLeftDiagonal = IntStream.range(0, base - 3)
                 .anyMatch(startX -> IntStream.range(0, height - 3)
                         .anyMatch(startY -> IntStream.range(0, 4)
-                                .allMatch(offset -> getPiece(startX + offset, startY - offset) == pieceType)
+                                .allMatch(offset -> startX + offset < base && startY - offset >= 0 &&
+                                        getPiece(startX + offset, startY - offset) == pieceType)
                         )
                 );
         return leftToRightDiagonal || rightToLeftDiagonal;
     }
 
-//    private boolean checkDiagonalWin(char pieceType) {
+
+
+//    public boolean isFinished() {
+//        return checkWin(redPiece) || checkWin(bluePiece);
 //    }
-
-
-    public boolean isFinished() {
-        return checkWin(redPiece) || checkWin(bluePiece);
-    }
 
 
     public boolean finished() {
