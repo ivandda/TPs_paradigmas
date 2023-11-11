@@ -46,6 +46,7 @@ public class Linea {
         addPiece(prompt, redPiece);
         gameState = new BlueTurn();
         checkWin(redPiece);
+//        gameMode.checkWin(this, redPiece);
     }
 
 
@@ -74,12 +75,11 @@ public class Linea {
     }
 
 
-    public char getPiece(int x, int y) {
-        if (isOccupied(x, y)) {
-            return board.get(x).get(y);
-        } else {
-            return emptyPiece;
-        }
+    public char getPiece(int column, int row) {
+        return board.get(column).stream()
+                .filter(piece -> isOccupied(column, row))
+                .findFirst()
+                .orElse(emptyPiece);
     }
 
     private boolean isOccupied(int x, int y) {
