@@ -9,6 +9,7 @@ public class Linea {
     public static final char bluePiece = 'B';
     public static final char emptyPiece = 'X';
     public static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
+    public static final String message_cant_play_in_position = "No se puede jugar en esa posicion";
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
     private int base;
     private int height;
@@ -65,7 +66,7 @@ public class Linea {
 
     private void checkSpaceAvailability(int prompt) {
         if (prompt < 0 || prompt >= base || board.get(prompt).size() >= height) {
-            throw new IllegalArgumentException("No se puede jugar en esa posicion");
+            throw new IllegalArgumentException(message_cant_play_in_position);
         }
     }
 
@@ -103,6 +104,23 @@ public class Linea {
                                 .allMatch(k -> getPiece(i + k, j) == pieceType)
                         )
                 );
+    }
+
+    public boolean checkDiagonalWin(char pieceType) {
+        boolean leftToRightDiagonal = IntStream.range(0, base - 3)
+                .anyMatch(startX -> IntStream.range(0, height - 3)
+                        .anyMatch(startY -> IntStream.range(0, 4)
+                                .allMatch(offset -> getPiece(startX + offset, startY + offset) == pieceType)
+                        )
+                );
+
+        boolean rightToLeftDiagonal = IntStream.range(0, base - 3)
+                .anyMatch(startX -> IntStream.range(0, height - 3)
+                        .anyMatch(startY -> IntStream.range(0, 4)
+                                .allMatch(offset -> getPiece(startX + offset, startY - offset) == pieceType)
+                        )
+                );
+        return leftToRightDiagonal || rightToLeftDiagonal;
     }
 
 //    private boolean checkDiagonalWin(char pieceType) {
