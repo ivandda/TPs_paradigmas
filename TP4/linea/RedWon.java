@@ -34,4 +34,9 @@ public class RedWon extends GameState {
     public boolean isNext() {
         return game.RedWins();
     }
+
+    @Override
+    public String getCurrentState() {
+        return "Game ended: Red won";
+    }
 }

@@ -29,8 +29,9 @@ public abstract class GameState {
 
     public abstract boolean isBlueTurn();
 
-
     public abstract boolean isNext();
+
+    public abstract String getCurrentState();
 
     public GameState getNextState() {
         return possibleGameStates.stream().filter(gameState -> gameState.isNext()).findFirst().get();

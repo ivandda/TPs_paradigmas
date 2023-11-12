@@ -38,4 +38,9 @@ public class Draw extends GameState{
         return game.isDraw();
 //        return !game.isDraw() && !game.BlueWins() && !game.RedWins()
     }
+
+    @Override
+    public String getCurrentState() {
+        return "Game ended: Draw";
+    }
 }

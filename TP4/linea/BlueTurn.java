@@ -38,4 +38,9 @@ public class BlueTurn extends GameState {
     public boolean isNext() {
         return !game.isDraw() && !game.BlueWins() && !game.RedWins() && !game.isBlueTurn() && game.isRedTurn();
     }
+
+    @Override
+    public String getCurrentState() {
+        return "Blue's turn";
+    }
 }
