@@ -33,24 +33,6 @@ public class Linea {
         return prompt - 1;
     }
 
-//    public void playRedAt(int prompt) {
-//        prompt = offsetPromptToStartInOne(prompt);
-//        checkSpaceAvailability(prompt);
-//        gameState.checkRedCanPlay();
-//        addPiece(prompt, redPiece);
-//        gameState = new BlueTurn();
-//        System.out.println(gameMode.checkWin(this, redPiece));
-//    }
-//
-//    public void playBlueAt(int prompt) {
-//        prompt = offsetPromptToStartInOne(prompt);
-//        checkSpaceAvailability(prompt);
-//        gameState.checkBlueCanPlay();
-//        addPiece(prompt, bluePiece);
-//        gameState = new RedTurn();
-//        System.out.println(gameMode.checkWin(this, bluePiece));
-//    }
-
 
     public void playRedAt(int prompt) {
         prompt = offsetPromptToStartInOne(prompt);
@@ -69,7 +51,7 @@ public class Linea {
         board.get(column).add(pieceType);
     }
 
-    public void setState(GameState gameState){
+    public void setState(GameState gameState) {
         this.gameState = gameState;
     }
 
