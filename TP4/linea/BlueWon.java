@@ -1,13 +1,17 @@
 package linea;
 
 public class BlueWon extends GameState{
+    public BlueWon(Linea game) {
+        super(game);
+    }
+
     @Override
-    public void checkRedCanPlay() {
+    public void playRed(int column) {
         throw new RuntimeException(redCantPlayMessage);
     }
 
     @Override
-    public void checkBlueCanPlay() {
+    public void playBlue(int column) {
         throw new RuntimeException(blueCantPlayMessage);
     }
 
@@ -24,5 +28,10 @@ public class BlueWon extends GameState{
     @Override
     public boolean isBlueTurn() {
         return false;
+    }
+
+    @Override
+    public boolean isNext() {
+        return game.BlueWins();
     }
 }

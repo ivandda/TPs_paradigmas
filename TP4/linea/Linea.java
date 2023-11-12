@@ -6,8 +6,8 @@ import java.util.stream.IntStream;
 public class Linea {
     protected static final String message_invalid_dimensions_for_board = "Invalid dimensions for board";
     protected static final String message_cant_play_in_position = "Can't play in that position";
-    private static final char redPiece = 'R';
-    private static final char bluePiece = 'B';
+    static final char redPiece = 'R';
+    static final char bluePiece = 'B';
     private static final char emptyPiece = ' ';
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
     private int base;
@@ -22,7 +22,7 @@ public class Linea {
 
         this.base = base;
         this.height = height;
-        this.gameState = new RedTurn();
+        this.gameState = new RedTurn(this);
         this.gameMode = GameMode.setGameMode(Character.toUpperCase(gameModeIdentifier));
 
 
@@ -33,28 +33,44 @@ public class Linea {
         return prompt - 1;
     }
 
+//    public void playRedAt(int prompt) {
+//        prompt = offsetPromptToStartInOne(prompt);
+//        checkSpaceAvailability(prompt);
+//        gameState.checkRedCanPlay();
+//        addPiece(prompt, redPiece);
+//        gameState = new BlueTurn();
+//        System.out.println(gameMode.checkWin(this, redPiece));
+//    }
+//
+//    public void playBlueAt(int prompt) {
+//        prompt = offsetPromptToStartInOne(prompt);
+//        checkSpaceAvailability(prompt);
+//        gameState.checkBlueCanPlay();
+//        addPiece(prompt, bluePiece);
+//        gameState = new RedTurn();
+//        System.out.println(gameMode.checkWin(this, bluePiece));
+//    }
+
+
     public void playRedAt(int prompt) {
         prompt = offsetPromptToStartInOne(prompt);
         checkSpaceAvailability(prompt);
-        gameState.checkRedCanPlay();
-        addPiece(prompt, redPiece);
-        gameState = new BlueTurn();
-        System.out.println(gameMode.checkWin(this, redPiece));
+        gameState.playRed(prompt);
     }
 
     public void playBlueAt(int prompt) {
         prompt = offsetPromptToStartInOne(prompt);
         checkSpaceAvailability(prompt);
-        gameState.checkBlueCanPlay();
-        addPiece(prompt, bluePiece);
-        gameState = new RedTurn();
-        System.out.println(gameMode.checkWin(this, bluePiece));
+        gameState.playBlue(prompt);
     }
 
 
-
-    public void addPiece(int column, char pieceType) {
+    public void playPiece(int column, char pieceType) {
         board.get(column).add(pieceType);
+    }
+
+    public void setState(GameState gameState){
+        this.gameState = gameState;
     }
 
     private void checkSpaceAvailability(int prompt) {

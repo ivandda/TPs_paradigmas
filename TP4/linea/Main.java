@@ -38,8 +38,8 @@ public class Main {
         linea1.playBlueAt(2);
         linea1.playRedAt(1);
 //        linea1.playBlueAt(2);
-//        linea1.playRedkAt(1);
-//        linea1.playRedkAt(1);
+//        linea1.playRedAt(1);
+//        linea1.playRedAt(1);
 
 //        linea1.playBlueAt(0);
 

@@ -3,11 +3,21 @@ package linea;
 import java.util.ArrayList;
 
 public class BlueTurn extends GameState {
-    @Override
-    public void checkRedCanPlay() {throw new RuntimeException(redCantPlayMessage);}
+    public BlueTurn(Linea game) {
+        super(game);
+    }
 
     @Override
-    public void checkBlueCanPlay() {}
+    public void playRed(int column) {
+        throw new RuntimeException(redCantPlayMessage);
+    }
+
+    @Override
+    public void playBlue(int column) {
+        game.playPiece(column, Linea.bluePiece);
+        game.setState(getNextState());
+    }
+
 
     @Override
     public boolean isFinished() {
@@ -22,5 +32,10 @@ public class BlueTurn extends GameState {
     @Override
     public boolean isBlueTurn() {
         return true;
+    }
+
+    @Override
+    public boolean isNext() {
+        return !game.isDraw() && !game.BlueWins() && !game.RedWins() && !game.isBlueTurn() && game.isRedTurn();
     }
 }
