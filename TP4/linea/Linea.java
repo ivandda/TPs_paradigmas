@@ -14,6 +14,7 @@ public class Linea {
     private int height;
     private GameState gameState;
     private GameMode gameMode;
+
     public Linea(int promptBase, int promptHeight, char c) {
         if (promptBase <= 0 || promptHeight <= 0) {
             throw new IllegalArgumentException(message_invalid_dimensions_for_board);
@@ -30,14 +31,6 @@ public class Linea {
 
     private static int offsetPromptToStartInOne(int prompt) {
         return prompt - 1;
-    }
-
-    public int getBase() {
-        return base;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public void playRedAt(int prompt) {
@@ -68,64 +61,43 @@ public class Linea {
         }
     }
 
-
     public char getPiece(int column, int row) {
-        return IntStream.range(0, base)
-                .filter(x -> x == column && isOccupied(x, row))
-                .mapToObj(x -> board.get(x).get(row))
-                .findFirst()
-                .orElse(emptyPiece);
+        return IntStream.range(0, base).filter(x -> x == column && isOccupied(x, row)).mapToObj(x -> board.get(x).get(row)).findFirst().orElse(emptyPiece);
     }
 
     private boolean isOccupied(int x, int y) {
         return x < base && y < height && y < board.get(x).size();
     }
 
-
     public boolean checkVerticalWin(char pieceType) {
-        return IntStream.range(0, base)
-                .anyMatch(i -> IntStream.range(0, height - 3)
-                        .anyMatch(j -> IntStream.range(0, 4)
-                                .allMatch(k -> getPiece(i, j + k) == pieceType)
-                        )
-                );
+        return IntStream.range(0, base).anyMatch(i -> IntStream.range(0, height - 3).anyMatch(j -> IntStream.range(0, 4).allMatch(k -> getPiece(i, j + k) == pieceType)));
     }
 
     public boolean checkHorizontalWin(char pieceType) {
-        return IntStream.range(0, base - 3)
-                .anyMatch(i -> IntStream.range(0, height)
-                        .anyMatch(j -> IntStream.range(0, 4)
-                                .allMatch(k -> getPiece(i + k, j) == pieceType)
-                        )
-                );
+        return IntStream.range(0, base - 3).anyMatch(i -> IntStream.range(0, height).anyMatch(j -> IntStream.range(0, 4).allMatch(k -> getPiece(i + k, j) == pieceType)));
     }
 
     public boolean checkDiagonalWin(char pieceType) {
-        boolean leftToRightDiagonal = IntStream.range(0, base - 3)
-                .anyMatch(startX -> IntStream.range(0, height - 3)
-                        .anyMatch(startY -> IntStream.range(0, 4)
-                                .allMatch(offset -> getPiece(startX + offset, startY + offset) == pieceType)
-                        )
-                );
+        boolean leftToRightDiagonal = IntStream.range(0, base - 3).anyMatch(startX -> IntStream.range(0, height - 3).anyMatch(startY -> IntStream.range(0, 4).allMatch(offset -> getPiece(startX + offset, startY + offset) == pieceType)));
 
-        boolean rightToLeftDiagonal = IntStream.range(0, base - 3)
-                .anyMatch(startX -> IntStream.range(0, height - 3)
-                        .anyMatch(startY -> IntStream.range(0, 4)
-                                .allMatch(offset -> startX + offset < base && startY - offset >= 0 &&
-                                        getPiece(startX + offset, startY - offset) == pieceType)
-                        )
-                );
+        boolean rightToLeftDiagonal = IntStream.range(0, base - 3).anyMatch(startX -> IntStream.range(0, height - 3).anyMatch(startY -> IntStream.range(0, 4).allMatch(offset -> startX + offset < base && startY - offset >= 0 && getPiece(startX + offset, startY - offset) == pieceType)));
         return leftToRightDiagonal || rightToLeftDiagonal;
     }
-
 
     public boolean finished() {
         return false;
     }
 
-
     public String show() {
         return LineaBoardRenderer.render(this);
+    }
+
+    public int getBase() {
+        return base;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
 
