@@ -29,8 +29,11 @@ public class Main {
 
         System.out.println(linea1.show());
         linea1.playRedAt(1);
+        System.out.println(linea1.show());
         linea1.playBlueAt(1);
+        System.out.println(linea1.show());
         linea1.playRedAt(2);
+        System.out.println(linea1.show());
         linea1.playBlueAt(2);
 //        System.out.println((linea1.gameState.getClass()));
 //        linea1.playRedAt(3);

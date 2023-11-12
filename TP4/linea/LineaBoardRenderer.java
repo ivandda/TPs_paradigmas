@@ -10,6 +10,7 @@ public class LineaBoardRenderer {
     public static String render(Linea linea) {
         StringBuilder boardString = new StringBuilder();
 
+        boardString.append(linea.getCurrentState()).append("\n\n");
         boardString.append(generateRowHeader(linea));
         boardString.append(generateBoardRepresentation(linea));
         boardString.append(generateColumnNumbers(linea));

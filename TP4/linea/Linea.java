@@ -142,6 +142,10 @@ public class Linea {
     public int getHeight() {
         return height;
     }
+
+    public String getCurrentState() {
+        return gameState.getCurrentState();
+    }
 }
 
 
