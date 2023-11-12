@@ -118,6 +118,22 @@ public class Linea {
         return gameState.isBlueTurn();
     }
 
+    public boolean BlueWins() {
+        return gameMode.checkWin(this, bluePiece);
+    }
+
+    public boolean RedWins() {
+        return gameMode.checkWin(this, redPiece);
+    }
+
+    public boolean isDraw() {
+        return boardIsFull() && !BlueWins() && !RedWins();
+    }
+
+    public boolean boardIsFull() {
+        return IntStream.range(0, base)
+                .allMatch(i -> board.get(i).size() == height);
+    }
 
     public int getBase() {
         return base;
@@ -126,13 +142,6 @@ public class Linea {
     public int getHeight() {
         return height;
     }
-
-    public boolean boardIsFull() {
-        return IntStream.range(0, base)
-                .allMatch(i -> board.get(i).size() == height);
-    }
-
-
 }
 
 

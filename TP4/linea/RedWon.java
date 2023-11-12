@@ -1,8 +1,6 @@
 package linea;
 
-import java.util.ArrayList;
-
-public class GameWon extends GameState {
+public class RedWon extends GameState {
     @Override
     public void checkRedCanPlay() {throw new RuntimeException(redCantPlayMessage);}
 
