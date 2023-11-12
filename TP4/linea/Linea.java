@@ -51,6 +51,8 @@ public class Linea {
         System.out.println(gameMode.checkWin(this, bluePiece));
     }
 
+
+
     public void addPiece(int column, char pieceType) {
         board.get(column).add(pieceType);
     }
