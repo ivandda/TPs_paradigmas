@@ -6,7 +6,7 @@ public class HorizontalOrVerticalOrDiagonal extends GameMode {
     }
 
     @Override
-    public boolean checkWin(Linea linea, char bluePiece) {
-        return linea.checkVerticalWin(bluePiece) || linea.checkHorizontalWin(bluePiece) || linea.checkDiagonalWin(bluePiece);
+    public boolean checkWin(Linea linea, char pieceType) {
+        return linea.checkVerticalWin(pieceType) || linea.checkHorizontalWin(pieceType) || linea.checkDiagonalWin(pieceType);
     }
 }

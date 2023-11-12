@@ -6,7 +6,7 @@ public class Diagonals extends GameMode {
     }
 
     @Override
-    public boolean checkWin(Linea linea, char bluePiece) {
-        return linea.checkDiagonalWin(bluePiece);
+    public boolean checkWin(Linea linea, char pieceType) {
+        return linea.checkDiagonalWin(pieceType);
     }
 }

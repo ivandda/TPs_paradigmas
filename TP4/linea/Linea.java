@@ -15,7 +15,7 @@ public class Linea {
     private GameState gameState;
     private GameMode gameMode;
 
-    public Linea(int base, int height, char c) {
+    public Linea(int base, int height, char gameModeIdentifier) {
         if (base <= 0 || height <= 0) {
             throw new IllegalArgumentException(message_invalid_dimensions_for_board);
         }
@@ -23,7 +23,7 @@ public class Linea {
         this.base = base;
         this.height = height;
         this.gameState = new RedTurn();
-        this.gameMode = GameMode.setGameMode(c);
+        this.gameMode = GameMode.setGameMode(Character.toUpperCase(gameModeIdentifier));
 
 
         IntStream.range(0, this.base).forEach(i -> this.board.add(new ArrayList<>()));
@@ -125,6 +125,11 @@ public class Linea {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean boardIsFull() {
+        return IntStream.range(0, base)
+                .allMatch(i -> board.get(i).size() == height);
     }
 
 
