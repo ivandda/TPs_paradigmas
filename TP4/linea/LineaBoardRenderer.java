@@ -3,9 +3,9 @@ package linea;
 import java.util.stream.IntStream;
 
 public class LineaBoardRenderer {
-    private static final char HORIZONTAL_LINE = '─';
-    private static final char VERTICAL_LINE = '│';
-    private static final char CROSS = '┼';
+    private static final char HORIZONTAL_LINE = '═';
+    private static final char VERTICAL_LINE = '║';
+    private static final char CROSS = '╬';
 
     public static String render(Linea linea) {
         StringBuilder boardString = new StringBuilder();

@@ -25,7 +25,7 @@ public class Main {
 ////        System.out.println(linea1.finished());
 //        System.out.println(linea1.checkVerticalWin('B'));
 
-        Linea linea1 = new Linea(2, 2, 'b');
+        Linea linea1 = new Linea(20, 20, 'b');
 
         System.out.println(linea1.show());
         linea1.playRedAt(1);
