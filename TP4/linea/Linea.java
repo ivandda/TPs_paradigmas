@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class Linea {
-    //    add Getters
-    public static final char HORIZONTAL_LINE = '─';
-    public static final char VERTICAL_LINE = '│';
-    public static final char CROSS = '┼';
-    public static final char redPiece = 'R';
-    public static final char bluePiece = 'B';
-    public static final char emptyPiece = ' ';
-    public static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
-    public static final String message_cant_play_in_position = "No se puede jugar en esa posicion";
+    private static final char redPiece = 'R';
+    private static final char bluePiece = 'B';
+    private static final char emptyPiece = ' ';
+    protected static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
+    protected static final String message_cant_play_in_position = "No se puede jugar en esa posicion";
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
 
     public int getBase() {
