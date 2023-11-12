@@ -14,6 +14,15 @@ public class Linea {
     public static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
     public static final String message_cant_play_in_position = "No se puede jugar en esa posicion";
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
+
+    public int getBase() {
+        return base;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     private int base;
     private int height;
     private GameState gameState;
@@ -74,12 +83,6 @@ public class Linea {
     }
 
 
-//    public char getPiece(int column, int row) {
-//        if (isOccupied(column, row)) {
-//            return board.get(column).get(row);
-//        }
-//        return emptyPiece;
-//    }
 
     public char getPiece(int column, int row) {
         return IntStream.range(0, base)
@@ -133,10 +136,6 @@ public class Linea {
 
 
 
-//    public boolean isFinished() {
-//        return checkWin(redPiece) || checkWin(bluePiece);
-//    }
-
 
     public boolean finished() {
         return false;
@@ -144,68 +143,11 @@ public class Linea {
 
 
     public String show() {
-        StringBuilder boardString = new StringBuilder();
-
-        boardString.append(generateRowHeader());
-        boardString.append(generateBoardRepresentation());
-        boardString.append(generateColumnNumbers());
-
-        return boardString.toString();
+        return LineaBoardRenderer.render(this);
     }
 
-    private String generateRowHeader() {
-        String heightStr = String.valueOf(height);
-        StringBuilder rowHeaderBuilder = new StringBuilder();
 
-        rowHeaderBuilder.append(" ".repeat(heightStr.length() + 1));
-        rowHeaderBuilder.append(CROSS);
 
-        IntStream.range(0, base).forEach(column -> {
-            rowHeaderBuilder.append(HORIZONTAL_LINE).append(HORIZONTAL_LINE).append(HORIZONTAL_LINE);
-            rowHeaderBuilder.append(CROSS);
-        });
-        rowHeaderBuilder.append("\n");
-
-        return rowHeaderBuilder.toString();
-    }
-
-    private String generateBoardRepresentation() {
-        StringBuilder rowBuilder = new StringBuilder();
-        String heightStr = String.valueOf(height);
-
-        IntStream.range(0, height).forEach(row -> {
-            int rowNumber = height - row;
-            rowBuilder.append(rowNumber).append(" ".repeat(heightStr.length() - String.valueOf(rowNumber).length() + 1)).append(VERTICAL_LINE);
-            IntStream.range(0, base).forEach(column -> {
-                rowBuilder.append(" ").append(getPiece(column, rowNumber - 1)).append(" ");
-                rowBuilder.append(VERTICAL_LINE);
-            });
-            rowBuilder.append("\n");
-
-            rowBuilder.append(" ").append(" ".repeat(heightStr.length())).append(CROSS);
-            IntStream.range(0, base).forEach(column -> {
-                rowBuilder.append(HORIZONTAL_LINE).append(HORIZONTAL_LINE).append(HORIZONTAL_LINE);
-                rowBuilder.append(CROSS);
-            });
-
-            rowBuilder.append("\n");
-        });
-        return rowBuilder.toString();
-    }
-
-    private String generateColumnNumbers() {
-        StringBuilder rowFooterBuilder = new StringBuilder();
-        String heightStr = String.valueOf(height);
-
-        rowFooterBuilder.append(" ".repeat(heightStr.length()));
-        IntStream.range(0, base).forEach(column -> {
-            rowFooterBuilder.append(" ".repeat(4 - String.valueOf(column + 1).length()));
-            rowFooterBuilder.append(column + 1);
-        });
-        rowFooterBuilder.append("\n");
-
-        return rowFooterBuilder.toString();
-    }
 }
 
 
