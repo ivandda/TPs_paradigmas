@@ -13,7 +13,7 @@ public class Game {
         System.out.println(game.show());
 
         while (!game.finished()) {
-            game.playRedkAt(promptAsInt("Rojas? "));
+            game.playRedAt(promptAsInt("Rojas? "));
             System.out.println(game.show());
 
             if (!game.finished()) {

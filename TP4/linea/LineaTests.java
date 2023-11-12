@@ -21,21 +21,21 @@ public class LineaTests {
 
     @Test
     public void addingARedPieceAddsItCorrectly() {
-        lineaA7x6.playRedkAt(1);
+        lineaA7x6.playRedAt(1);
         assertEquals('R', lineaA7x6.getPiece(1, 0));
-        lineaA7x6.playRedkAt(1);
+        lineaA7x6.playRedAt(1);
         assertEquals('R', lineaA7x6.getPiece(1, 1));
     }
 
     @Test
     public void redPlayerStartsGame() {
-        lineaA7x6.playRedkAt(1);
+        lineaA7x6.playRedAt(1);
         assertEquals('R', lineaA7x6.getPiece(1, 0));
     }
 
     @Test
     public void BluePlayerPlaysAfterRedPlayer() {
-        lineaA7x6.playRedkAt(1);
+        lineaA7x6.playRedAt(1);
         lineaA7x6.playBlueAt(1);
         assertEquals('B', lineaA7x6.getPiece(1, 1));
     }

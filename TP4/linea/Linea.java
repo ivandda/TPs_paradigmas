@@ -4,31 +4,16 @@ import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class Linea {
+    protected static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
+    protected static final String message_cant_play_in_position = "No se puede jugar en esa posicion";
     private static final char redPiece = 'R';
     private static final char bluePiece = 'B';
     private static final char emptyPiece = ' ';
-    protected static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
-    protected static final String message_cant_play_in_position = "No se puede jugar en esa posicion";
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
-
-    public int getBase() {
-        return base;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     private int base;
     private int height;
     private GameState gameState;
-
-//    private ArrayList<GameMode> possibleGameModes = new ArrayList<>();
-//    possibleGameModes.add(new GMA());
-//    possibleGameModes.add(new GMB());
-//    possibleGameModes.add(new GMC());
     private GameMode gameMode;
-
     public Linea(int promptBase, int promptHeight, char c) {
         if (promptBase <= 0 || promptHeight <= 0) {
             throw new IllegalArgumentException(mensaje_tablero_invalido);
@@ -43,8 +28,19 @@ public class Linea {
         IntStream.range(0, this.base).forEach(i -> this.board.add(new ArrayList<>()));
     }
 
+    private static int offsetPromptToStartInOne(int prompt) {
+        return prompt - 1;
+    }
 
-    public void playRedkAt(int prompt) {
+    public int getBase() {
+        return base;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void playRedAt(int prompt) {
         prompt = offsetPromptToStartInOne(prompt);
         checkSpaceAvailability(prompt);
         gameState.checkRedCanPlay();
@@ -53,8 +49,6 @@ public class Linea {
         System.out.println(gameMode.checkWin(this, redPiece));
     }
 
-
-
     public void playBlueAt(int prompt) {
         prompt = offsetPromptToStartInOne(prompt);
         checkSpaceAvailability(prompt);
@@ -62,10 +56,6 @@ public class Linea {
         addPiece(prompt, bluePiece);
         gameState = new RedTurn();
         System.out.println(gameMode.checkWin(this, bluePiece));
-    }
-
-    private static int offsetPromptToStartInOne(int prompt) {
-        return prompt -1;
     }
 
     public void addPiece(int column, char pieceType) {
@@ -79,7 +69,6 @@ public class Linea {
     }
 
 
-
     public char getPiece(int column, int row) {
         return IntStream.range(0, base)
                 .filter(x -> x == column && isOccupied(x, row))
@@ -91,7 +80,6 @@ public class Linea {
     private boolean isOccupied(int x, int y) {
         return x < base && y < height && y < board.get(x).size();
     }
-
 
 
     public boolean checkVerticalWin(char pieceType) {
@@ -131,8 +119,6 @@ public class Linea {
     }
 
 
-
-
     public boolean finished() {
         return false;
     }
@@ -141,7 +127,6 @@ public class Linea {
     public String show() {
         return LineaBoardRenderer.render(this);
     }
-
 
 
 }
