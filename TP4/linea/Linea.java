@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class Linea {
-    protected static final String mensaje_tablero_invalido = "No se puede crear tableros con esas dimensiones";
-    protected static final String message_cant_play_in_position = "No se puede jugar en esa posicion";
+    protected static final String message_invalid_dimensions_for_board = "Invalid dimensions for board";
+    protected static final String message_cant_play_in_position = "Can't play in that position";
     private static final char redPiece = 'R';
     private static final char bluePiece = 'B';
     private static final char emptyPiece = ' ';
@@ -16,7 +16,7 @@ public class Linea {
     private GameMode gameMode;
     public Linea(int promptBase, int promptHeight, char c) {
         if (promptBase <= 0 || promptHeight <= 0) {
-            throw new IllegalArgumentException(mensaje_tablero_invalido);
+            throw new IllegalArgumentException(message_invalid_dimensions_for_board);
         }
 
         this.base = promptBase;
