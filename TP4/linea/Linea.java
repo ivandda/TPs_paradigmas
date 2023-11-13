@@ -65,11 +65,12 @@ public class Linea {
         return IntStream.range(0, base)
                 .filter(x -> x == column && isOccupied(x, row))
                 .mapToObj(x -> board.get(x).get(row))
-                .findFirst().orElse(emptyPiece);
+                .findFirst()
+                .orElse(emptyPiece);
     }
 
     private boolean isOccupied(int x, int y) {
-        return x < base && y < height && y < board.get(x).size();
+        return x < base && y < height && y < board.get(x).size() && y >= 0 && x >= 0;
     }
 
     public boolean checkVerticalWin(char pieceType) {
@@ -92,12 +93,12 @@ public class Linea {
                         .anyMatch(startY -> IntStream.range(0, 4)
                                 .allMatch(offset -> getPiece(startX + offset, startY + offset) == pieceType)));
 
-        boolean rightToLeftDiagonal = IntStream.range(0, base - 3)
+        boolean rightToLeftDiagonal = IntStream.range(3, base)
                 .anyMatch(startX -> IntStream.range(0, height - 3)
                         .anyMatch(startY -> IntStream.range(0, 4)
-                                .allMatch
-                                        (offset -> startX + offset < base && startY - offset >= 0
-                                                && getPiece(startX + offset, startY - offset) == pieceType)));
+                                .allMatch(offset -> startX - offset >= 0 && startY + offset < height
+                                        && getPiece(startX - offset, startY + offset) == pieceType)));
+
 
         return leftToRightDiagonal || rightToLeftDiagonal;
     }
