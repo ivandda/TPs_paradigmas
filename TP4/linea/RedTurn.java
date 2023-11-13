@@ -14,7 +14,9 @@ public class RedTurn extends GameState {
     }
 
     @Override
-    public void playBlue(int column) {throw new RuntimeException(blueCantPlayMessage);}
+    public void playBlue(int column) {
+        throw new RuntimeException(blueCantPlayMessage);
+    }
 
     @Override
     public boolean isFinished() {
