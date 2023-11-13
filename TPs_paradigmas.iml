@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/TP2" isTestSource="false" packagePrefix="queue" />
       <sourceFolder url="file://$MODULE_DIR$/TP3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TP3/submarino2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TP4" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
