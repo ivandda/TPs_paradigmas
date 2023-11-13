@@ -31,7 +31,7 @@ public class BlueWon extends GameState{
     }
 
     @Override
-    public boolean isNext() {
+    public boolean isNextTurn() {
         return game.BlueWins();
     }
 

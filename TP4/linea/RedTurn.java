@@ -34,7 +34,7 @@ public class RedTurn extends GameState {
     }
 
     @Override
-    public boolean isNext() {
+    public boolean isNextTurn() {
         return !game.isDraw() && !game.BlueWins() && !game.RedWins() && !game.isRedTurn() && game.isBlueTurn();
     }
 

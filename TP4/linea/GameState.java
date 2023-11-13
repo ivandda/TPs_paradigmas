@@ -16,8 +16,8 @@ public abstract class GameState {
             new BlueWon(game),
             new Draw(game)
     ));
-    protected String blueCantPlayMessage = "Blue cant play in this round";
-    protected String redCantPlayMessage = "Red cant play in this round";
+    protected static String blueCantPlayMessage = "Blue cant play in this round";
+    protected static String redCantPlayMessage = "Red cant play in this round";
 
     public abstract void playRed(int column);
 
@@ -29,12 +29,12 @@ public abstract class GameState {
 
     public abstract boolean isBlueTurn();
 
-    public abstract boolean isNext();
+    public abstract boolean isNextTurn();
 
     public abstract String getCurrentState();
 
     public GameState getNextState() {
-        return possibleGameStates.stream().filter(gameState -> gameState.isNext()).findFirst().get();
+        return possibleGameStates.stream().filter(gameState -> gameState.isNextTurn()).findFirst().get();
     }
 
 
