@@ -9,12 +9,13 @@ import java.util.stream.IntStream;
 import static linea.GameMode.invalid_game_mode_choice;
 import static linea.Linea.message_cant_play_in_position;
 import static linea.Linea.message_invalid_dimensions_for_board;
+import static linea.GameState.blueCantPlayMessage;
+import static linea.GameState.redCantPlayMessage;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class LineaTests {
     private Linea game;
-    private Linea gameB;
 
     @BeforeEach
     public void setUp() {
@@ -22,7 +23,35 @@ public class LineaTests {
     }
 
     @Test
-    public void test01CannotInitializeBoardSmallerThan1x1() {
+    public void test01CreationOfDifferentBoardDimensions1() {
+        Linea game = new Linea(1, 2, 'A');
+        assertEquals(1, game.getBase());
+        assertEquals(2, game.getHeight());
+    }
+
+    @Test
+    public void tes02tCreationOfDifferentBoardDimensions2() {
+        Linea game = new Linea(4, 5, 'A');
+        assertEquals(4, game.getBase());
+        assertEquals(5, game.getHeight());
+    }
+
+    @Test
+    public void test03CreationOfDifferentBoardDimensions3() {
+        Linea game = new Linea(9,15, 'A');
+        assertEquals(9, game.getBase());
+        assertEquals(15, game.getHeight());
+    }
+
+    @Test
+    public void test04CreationOfDifferentBoardDimensions4() {
+        Linea game = new Linea(1,21, 'A');
+        assertEquals(1, game.getBase());
+        assertEquals(21, game.getHeight());
+    }
+
+    @Test
+    public void test06CannotInitializeBoardSmallerThan1x1() {
         assertThrowsError(() -> new Linea(0, 0, 'A'), message_invalid_dimensions_for_board);
     }
 
@@ -45,9 +74,41 @@ public class LineaTests {
         });
     }
 
+
     @Test
     public void test04RedStartsGame() {
-        assertEquals("Red's turn", game.getCurrentState());
+        assertTrue(game.isRedTurn());
+    }
+
+    @Test
+    public void testBlueCantPlayInFirstRound() {
+        assertThrowsError(() -> game.playBlueAt(1), blueCantPlayMessage);
+    }
+
+    @Test
+    public void BluePLaysAfterRed() {
+        game.playRedAt(1);
+        assertTrue(game.isBlueTurn());
+    }
+
+    @Test
+    void RedPlaysAfterBlue() {
+        game.playRedAt(1);
+        game.playBlueAt(1);
+        assertTrue(game.isRedTurn());
+    }
+
+    @Test
+    void redCantPLayInBlueTurn() {
+        game.playRedAt(1);
+        assertThrowsError(() -> game.playRedAt(1), redCantPlayMessage);
+    }
+
+    @Test
+    void blueCantPLayInRedTurn() {
+        game.playRedAt(1);
+        game.playBlueAt(1);
+        assertThrowsError(() -> game.playBlueAt(1), blueCantPlayMessage);
     }
 
     @Test
@@ -58,6 +119,12 @@ public class LineaTests {
     @Test
     public void test06CannotPlayInColumn0() {
         assertThrowsError(() -> game.playRedAt(0), message_cant_play_in_position);
+    }
+
+    @Test
+    public void playInColumnOnePlaysInOneForOffsetPurposes() {
+        game.playRedAt(1);
+        assertEquals('R', game.getPiece(0, 0));
     }
 
     @Test
@@ -160,15 +227,11 @@ public class LineaTests {
         assertEquals(boardRenderExpected, game.show());
     }
 
-// Test that a piece cannot be placed in a full column.
-
     @Test
     public void test12CannotPlayInFullColumn() {
         playLinea(2, 2, 2, 2);
         assertThrowsError(() -> game.playRedAt(2), message_cant_play_in_position);
     }
-
-// Test that pieces are positioned at the lowest available position.
 
     @Test
     public void test13PiecesArePositionedAtTheLowestAvailablePosition() {
@@ -191,135 +254,161 @@ public class LineaTests {
     }
 
     @Test
-    public void test14RedHasHorizontalLine() {
-        playLinea(1, 1, 2, 2, 3, 3, 4);
-        String boardRenderExpected = """
-                Game ended: Red won
-                    
-                  ╬═══╬═══╬═══╬═══╬
-                4 ║   ║   ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                3 ║   ║   ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                2 ║ B ║ B ║ B ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                1 ║ R ║ R ║ R ║ R ║
-                  ╬═══╬═══╬═══╬═══╬
-                    1   2   3   4
-                """;
-        assertEquals(boardRenderExpected, game.show());
+    public void test14RedWinsWithHorizontalLineModeA() {
+        redPlaysHorizontalLine();
+        assertEquals(redHasHorizontalLineWins(), game.show());
     }
 
     @Test
-    public void test15BlueHasHorizontalLine() {
-        playLinea(1, 1, 2, 2, 3, 3, 1, 4, 2, 4);
-        String boardRenderExpected = """
-                Game ended: Blue won
-                    
-                  ╬═══╬═══╬═══╬═══╬
-                4 ║   ║   ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                3 ║ R ║ R ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                2 ║ B ║ B ║ B ║ B ║
-                  ╬═══╬═══╬═══╬═══╬
-                1 ║ R ║ R ║ R ║ B ║
-                  ╬═══╬═══╬═══╬═══╬
-                    1   2   3   4
-                """;
-        assertEquals(boardRenderExpected, game.show());
+    public void cantPLayAfterAWin() {
+        redPlaysHorizontalLine();
+        assertThrowsError(() -> game.playRedAt(3), redCantPlayMessage);
     }
 
     @Test
-    public void test16RedHasVerticalLine() {
-        playLinea(1, 2, 1, 2, 1, 2, 1);
-        String boardRenderExpected = """
-                Game ended: Red won
-                    
-                  ╬═══╬═══╬═══╬═══╬
-                4 ║ R ║   ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                3 ║ R ║ B ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                2 ║ R ║ B ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                1 ║ R ║ B ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                    1   2   3   4
-                """;
-        assertEquals(boardRenderExpected, game.show());
+    public void cantPLayAfterAWin2() {
+        bluePlaysHorizontalLine();
+        assertThrowsError(() -> game.playRedAt(3), redCantPlayMessage);
     }
 
     @Test
-    public void test17BlueHasVerticalLine() {
-        playLinea(1, 2, 1, 2, 1, 2, 3, 2);
-        String boardRenderExpected = """
-                Game ended: Blue won
-                    
-                  ╬═══╬═══╬═══╬═══╬
-                4 ║   ║ B ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                3 ║ R ║ B ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                2 ║ R ║ B ║   ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                1 ║ R ║ B ║ R ║   ║
-                  ╬═══╬═══╬═══╬═══╬
-                    1   2   3   4
-                """;
-        assertEquals(boardRenderExpected, game.show());
+    public void gameDraws(){
+        playLinea(1, 2, 3, 4, 1, 3, 2, 2, 1, 1, 4, 3, 2, 4, 3, 4);
+        assertTrue(game.isDraw());
     }
 
     @Test
-    public void test18RedHasDiagonalLine() {
+    public void cantPlayAfterADraw() {
+        Linea game = new Linea(2, 2, 'A');
+        game.playRedAt(1);
+        game.playBlueAt(1);
+        game.playRedAt(2);
+        game.playBlueAt(2);
+        assertThrowsError(() -> game.playRedAt(2), message_cant_play_in_position);
+    }
+
+    @Test
+    public void test15BlueWinsWithHorizontalLineModeA() {
+        bluePlaysHorizontalLine();
+        assertEquals(blueHasHorizontalLineWins(), game.show());
+    }
+
+    @Test
+    public void test16RedWinsWithVerticalLineModeA() {
+        redPlaysVerticalLine();
+        assertEquals(redHasVerticalLineWins(), game.show());
+    }
+
+    @Test
+    public void test17BlueWinsWithVerticalLineModeA() {
+        bluePlaysVerticalLine();
+        assertEquals(blueHasVerticalLineWins(), game.show());
+    }
+
+    @Test
+    public void test18RedDoesntWinWithDiagonalLineModeA() {
+        redPlaysDiagonalLine();
+        assertEquals(redHasDiagonalLineNotWins(), game.show());
+    }
+
+    @Test
+    public void test19BlueDoesntWinWithDiagonalLineModeA() {
+        bluePlaysDiagonalLine();
+        assertEquals(blueHasDiagonalLineNotWins(), game.show());
+    }
+
+    @Test
+    public void test20RedDoesntWinWithHorizontalLineModeB() {
         game = newLineaB();
-        playLinea(1, 2, 2, 3, 3, 4, 3, 4, 4, 1, 4);
-        String boardRenderExpected = """
-                Game ended: Red won
-                    
-                  ╬═══╬═══╬═══╬═══╬
-                4 ║   ║   ║   ║ R ║
-                  ╬═══╬═══╬═══╬═══╬
-                3 ║   ║   ║ R ║ R ║
-                  ╬═══╬═══╬═══╬═══╬
-                2 ║ B ║ R ║ R ║ B ║
-                  ╬═══╬═══╬═══╬═══╬
-                1 ║ R ║ B ║ B ║ B ║
-                  ╬═══╬═══╬═══╬═══╬
-                    1   2   3   4
-                """;
-        assertEquals(boardRenderExpected, game.show());
+        redPlaysHorizontalLine();
+        assertEquals(redHasHorizontalLineNotWins(), game.show());
     }
 
-    // Test that blue has a diagonal line.
     @Test
-    public void test19BlueHasDiagonalLine() {
+    public void test21BlueDoesntWinWithHorizontalLineModeB() {
         game = newLineaB();
-        playLinea(2, 1, 3, 2, 3, 3, 4, 4, 4, 4);
-        String boardRenderExpected = """
-                Game ended: Blue won
-                    
-                  ╬═══╬═══╬═══╬═══╬
-                4 ║   ║   ║   ║ B ║
-                  ╬═══╬═══╬═══╬═══╬
-                3 ║   ║   ║ B ║ R ║
-                  ╬═══╬═══╬═══╬═══╬
-                2 ║   ║ B ║ R ║ B ║
-                  ╬═══╬═══╬═══╬═══╬
-                1 ║ B ║ R ║ R ║ R ║
-                  ╬═══╬═══╬═══╬═══╬
-                    1   2   3   4
-                """;
-        assertEquals(boardRenderExpected, game.show());
+        bluePlaysHorizontalLine();
+        assertEquals(blueHasHorizontalLineNotWins(), game.show());
     }
 
     @Test
-    public void test20BlueHasDiagonalLineInverted() {
+    public void test22RedDoesntWinWithVerticalLineModeB() {
+        game = newLineaB();
+        redPlaysVerticalLine();
+        assertEquals(redHasVerticalLineNotWins(), game.show());
+    }
+
+    @Test
+    public void test23BlueDoesntWinWithVerticalLineModeB() {
+        game = newLineaB();
+        bluePlaysVerticalLine();
+        assertEquals(blueHasVerticalLineNotWins(), game.show());
+    }
+
+    @Test
+    public void test24RedWinsWithDiagonalLineModeB() {
+        game = newLineaB();
+        redPlaysDiagonalLine();
+        assertEquals(redHasDiagonalLineWins(), game.show());
+    }
+
+    @Test
+    public void test25BlueWinsWithDiagonalLineModeB() {
+        game = newLineaB();
+        bluePlaysDiagonalLine();
+        assertEquals(blueHasDiagonalLineWins(), game.show());
+    }
+
+    @Test
+    public void test26RedWinsWithHorizontalLineModeC() {
+        game = newLineaC();
+        redPlaysHorizontalLine();
+        assertEquals(redHasHorizontalLineWins(), game.show());
+    }
+
+    @Test
+    public void test27BlueWinsWithHorizontalLineModeC() {
+        game = newLineaC();
+        bluePlaysHorizontalLine();
+        assertEquals(blueHasHorizontalLineWins(), game.show());
+    }
+
+    @Test
+    public void test28RedWinsWithVerticalLineModeC() {
+        game = newLineaC();
+        redPlaysVerticalLine();
+        assertEquals(redHasVerticalLineWins(), game.show());
+    }
+
+    @Test
+    public void test29BlueWinsWithVerticalLineModeC() {
+        game = newLineaC();
+        bluePlaysVerticalLine();
+        assertEquals(blueHasVerticalLineWins(), game.show());
+    }
+
+    @Test
+    public void test30RedWinsWithDiagonalLineModeC() {
+        game = newLineaC();
+        redPlaysDiagonalLine();
+        assertEquals(redHasDiagonalLineWins(), game.show());
+    }
+
+    @Test
+    public void test31BlueWinsWithDiagonalLineModeC() {
+        game = newLineaC();
+        bluePlaysDiagonalLine();
+        assertEquals(blueHasDiagonalLineWins(), game.show());
+    }
+
+
+    @Test
+    public void test32BlueHasDiagonalLineInverted() {
         game = newLineaB();
         playLinea(1, 2, 3, 4, 1, 3, 2, 2, 1, 1);
         String boardRenderExpected = """
                 Game ended: Blue won
-                    
+                        
                   ╬═══╬═══╬═══╬═══╬
                 4 ║ B ║   ║   ║   ║
                   ╬═══╬═══╬═══╬═══╬
@@ -334,10 +423,9 @@ public class LineaTests {
         assertEquals(boardRenderExpected, game.show());
     }
 
-// Test that the game ends in a draw.
 
     @Test
-    public void test21GameEndsInADraw() {
+    public void test33GameEndsInADraw() {
         game = newLineaC();
         playLinea(1, 2, 1, 2, 2, 1, 2, 1, 3, 4, 3, 4, 4, 3, 4, 3);
         String boardRenderExpected = """
@@ -357,25 +445,247 @@ public class LineaTests {
         assertEquals(boardRenderExpected, game.show());
     }
 
-// Test that the game ends when red wins.
-
     @Test
-    public void test22GameEndsWhenRedWins() {
+    public void test34GameEndsWhenRedWins() {
         game = newLineaB();
-        playLinea(1, 2, 2, 3, 3, 4, 3, 4, 4, 1, 4);
+        redPlaysDiagonalLine();
         assertThrowsError(() -> game.playBlueAt(3), "Blue cant play in this round");
     }
 
-// Test that the game ends when blue wins.
-
     @Test
-    public void test23GameEndsWhenBlueWins() {
+    public void test35GameEndsWhenBlueWins() {
         game = newLineaB();
-        playLinea(2, 1, 3, 2, 3, 3, 4, 4, 4, 4);
+        bluePlaysDiagonalLine();
         assertThrowsError(() -> game.playRedAt(3), "Red cant play in this round");
     }
 
-// Test that a piece cannot be placed when the game ends in a draw.
+    private static String redHasHorizontalLineWins() {
+        return """
+                Game ended: Red won
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║   ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ B ║ B ║ B ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ R ║ R ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String blueHasHorizontalLineWins() {
+        return """
+                Game ended: Blue won
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║ R ║ R ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ B ║ B ║ B ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ R ║ R ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String redHasHorizontalLineNotWins() {
+        return """
+                Blue's turn
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║   ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ B ║ B ║ B ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ R ║ R ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String blueHasHorizontalLineNotWins() {
+        return """
+                Red's turn
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║ R ║ R ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ B ║ B ║ B ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ R ║ R ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String redHasVerticalLineWins() {
+        return """
+                Game ended: Red won
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║ R ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String blueHasVerticalLineWins() {
+        return """
+                Game ended: Blue won
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ B ║ R ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String redHasVerticalLineNotWins() {
+        return """
+                Blue's turn
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║ R ║   ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String blueHasVerticalLineNotWins() {
+        return """
+                Red's turn
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ R ║ B ║   ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ B ║ R ║   ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String redHasDiagonalLineWins() {
+        return """
+                Game ended: Red won
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║   ║   ║ R ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ B ║ R ║ R ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ B ║ B ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String blueHasDiagonalLineWins() {
+        return """
+                Game ended: Blue won
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║   ║   ║ B ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║   ║ B ║ R ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ B ║ R ║ R ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String redHasDiagonalLineNotWins() {
+        return """
+                Blue's turn
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║   ║   ║ R ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║ B ║ R ║ R ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ R ║ B ║ B ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private static String blueHasDiagonalLineNotWins() {
+        return """
+                Red's turn
+                        
+                  ╬═══╬═══╬═══╬═══╬
+                4 ║   ║   ║   ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                3 ║   ║   ║ B ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                2 ║   ║ B ║ R ║ B ║
+                  ╬═══╬═══╬═══╬═══╬
+                1 ║ B ║ R ║ R ║ R ║
+                  ╬═══╬═══╬═══╬═══╬
+                    1   2   3   4
+                """;
+    }
+
+    private void redPlaysHorizontalLine() {
+        playLinea(1, 1, 2, 2, 3, 3, 4);
+    }
+
+    private void bluePlaysHorizontalLine() {
+        playLinea(1, 1, 2, 2, 3, 3, 1, 4, 2, 4);
+    }
+
+    private void redPlaysVerticalLine() {
+        playLinea(1, 2, 1, 2, 1, 2, 1);
+    }
+
+    private void bluePlaysVerticalLine() {
+        playLinea(1, 2, 1, 2, 1, 2, 3, 2);
+    }
+
+    private void redPlaysDiagonalLine() {
+        playLinea(1, 2, 2, 3, 3, 4, 3, 4, 4, 1, 4);
+    }
+
+    private void bluePlaysDiagonalLine() {
+        playLinea(2, 1, 3, 2, 3, 3, 4, 4, 4, 4);
+    }
 
     private Linea playLinea(int... moves) {
         for (int i = 0; i < moves.length; i += 2) {
