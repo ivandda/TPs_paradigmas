@@ -148,8 +148,3 @@ public class Linea {
         return gameState.getCurrentState();
     }
 }
-
-
-//no se puede crear tableros negativos
-// Co-authored-by: demdeo <demdeo@gmail.com>
-// Co-authored-by: ivandda <ivandominguezdealzaga@gmail.com>
